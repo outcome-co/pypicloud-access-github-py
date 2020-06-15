@@ -230,7 +230,6 @@ class TestPackages:
 
 @skip_for_integration
 class TestCache:
-
     def test_package_cache(self, github_access: GithubAccess):
         with patch.object(github_access, 'get_repositories') as patched_get_repositories:
             patched_get_repositories.return_value = []

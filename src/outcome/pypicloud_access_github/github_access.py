@@ -21,7 +21,8 @@ from typing import Any, Dict, List, Optional, Tuple
 from cachetools import TTLCache
 from github import ContentFile, Github, GithubObject, Organization, Repository
 from github.GithubException import GithubException
-from outcome.pypicloud_access_github import poetry_reader
+from outcome.pypicloud_access_github import graphql_schema, poetry_reader
+from outcome.pypicloud_access_github.graphql_endpoint import Endpoint, Operation
 from pypicloud.access.base import IAccessBackend
 from pyramid.settings import aslist
 
@@ -30,11 +31,7 @@ _cache_ttl = 120
 
 _poetry = 'pyproject.toml:poetry'
 
-_permissions_map = {
-    'pull': ['read'],
-    'push': ['write', 'read'],
-    'admin': ['write', 'read']
-}
+_permissions_map = {'pull': ['read'], 'push': ['write', 'read'], 'admin': ['write', 'read']}
 
 
 class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
@@ -51,6 +48,8 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         self.github_token = github_token
         self.github_organization_name = github_organization
         self.github_client = Github(github_token)
+
+        self.github_endpoint = Endpoint(github_token)
 
         self.package_repo_file_types = package_repo_file_types
         self.package_repo_pattern = package_repo_pattern
@@ -77,9 +76,7 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         return self.cache[cache_key]
 
     def get_package_name_from_file_type(
-        self,
-        package_file: ContentFile.ContentFile,
-        package_repo_file_type: str,
+        self, package_file: ContentFile.ContentFile, package_repo_file_type: str,
     ) -> Optional[str]:
         if package_repo_file_type == _poetry:
             return poetry_reader.get_package_name(package_file)
@@ -216,23 +213,28 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         Returns:
             List[str]: The list of group names.
         """
-        user = None
+        team_names = []
+
+        params = {}
 
         if username:
-            try:
-                user = self.github_client.get_user(username)
-            except GithubException:
-                return []
+            params['user_logins'] = [username]
 
-            if not user or not self.organization.has_in_members(user):
-                return []
+        def get_page(page_context):
+            op = self.organization_operation()
+            org = op.organization
 
-        teams = self.organization.get_teams()
+            teams = page_context.paginate(org.teams, **params)
+            teams.nodes.__fields__('name')
 
-        if user:
-            teams = filter(lambda t: t.has_in_members(user), teams)
+            result = self.github_endpoint.execute(op)
+            team_names.extend([t.name for t in result.organization.teams.nodes])
 
-        return map(lambda t: t.name, teams)
+            page_context.update_from_page_info(result.organization.teams)
+
+        self.github_endpoint.get_pages(get_page)
+
+        return team_names
 
     def group_members(self, group: str) -> List[str]:
         """Get a list of users that belong to a group.
@@ -243,13 +245,59 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         Returns:
             List[str]: The list usernames of the members of the group.
         """
-        teams = self.organization.get_teams()
-        team = next((t for t in teams if t.name == group), None)
+        op = self.organization_operation()
+        org = op.organization
 
-        if not team:
-            return []
+        # `query` is a an argument on the Team that filters by name
+        teams = org.teams(first=1, query=group)
+        team = teams.nodes
 
-        return list(map(lambda u: u.login, team.get_members()))
+        team.__fields__('name')
+        membership = team.members.edges
+        membership.__fields__('role')
+        member = membership.node
+        member.__fields__('login')
+
+        result = self.github_endpoint.execute(op)
+
+        return [m.node.login for t in result.organization.teams.nodes for m in t.members.edges]
+
+    def organization_operation(self) -> Operation:
+        operation = self.github_endpoint.operation()
+        operation.organization(login=self.github_organization_name)
+        return operation
+
+    def organization_members(self) -> List[Tuple[str, str]]:
+        """Retrieve the list of members and their roles.
+
+        Returns:
+            List[Tuple[str, str]]: A list of (username, role) tuples.
+        """
+        member_roles = []
+
+        def get_page(page_context):
+            op = self.organization_operation()
+            org = op.organization
+
+            # We want to page over the memberships
+            members = page_context.paginate(org.members_with_role)
+
+            # Memberships link organizations to users, and contain the role info
+            member = members.edges
+            # The membership role
+            member.__fields__('role')
+            # The node is the user
+            member.node.__fields__('login')
+
+            result = self.github_endpoint.execute(op)
+
+            member_roles.extend([(m.node.login, m.role) for m in result.organization.members_with_role.edges])
+
+            page_context.update_from_page_info(result.organization.members_with_role)
+
+        self.github_endpoint.get_pages(get_page)
+
+        return member_roles
 
     def is_admin(self, username: str) -> bool:
         """Check if the user is an admin.
@@ -260,8 +308,8 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         Returns:
             bool: True if the user is an admin.
         """
-        org_admins = self.organization.get_members(role='admin')
-        return any(True for admin in org_admins if admin.login == username)
+        members = self.organization_members()
+        return any(True for member, role in members if member == username and role == 'ADMIN')
 
     def group_permissions(self, package: str) -> Dict[str, List[str]]:
         """Get a mapping of all groups to their permissions on a package.
@@ -279,10 +327,7 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
 
         repository = packages[package]
 
-        return {
-            team.name: _permissions_map[team.permission]
-            for team in repository.get_teams()
-        }
+        return {team.name: _permissions_map[team.permission] for team in repository.get_teams()}
 
     def user_permissions(self, package: str) -> Dict[str, List[str]]:
         """
@@ -341,7 +386,6 @@ class GithubAccess(IAccessBackend):  # noqa: WPS214, WPS230
         """
         if username:
             user = self.github_client.get_user(username)
-
 
     def check_health(self) -> Tuple[bool, str]:
         """Check the health of the access backend.

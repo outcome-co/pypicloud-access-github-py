@@ -37,6 +37,8 @@ ignore = W503, # Allow line break before binary operator
          WPS431, # Allow nested classes
          WPS437, # Allow usage of protected attribute : _state
          WPS604, # Allow usage of `pass` or `global var` inside classes
+         WPS609, # Allow direct calling of magic methods
+         R504, # This rule is so often incorrect
 
 per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520
 # WPS442, # pytest fixtures require shadowing
