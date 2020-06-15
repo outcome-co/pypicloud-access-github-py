@@ -6,3 +6,7 @@ Description TBD
 ## Development
 
 Remember to run `./pre-commit.sh` when you clone the repository.
+
+### Testing
+
+See the test [README](./test/README.md).
