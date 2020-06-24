@@ -1,0 +1,112 @@
+{
+  "repositories": [
+    {
+      "name": "repo_1",
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_1_package\""
+      },
+      "meta": {
+        "package": "repo_1_package"
+      }
+    },
+    {
+      "name": "repo_2",
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_2_package\""
+      },
+      "meta": {
+        "package": "repo_2_package"
+      }
+    },
+    {
+      "name": "repo_3",
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_3_package\""
+      },
+      "meta": {
+        "comment": "This repo is to test repos without any associated teams",
+        "package": "repo_3_package"
+      }
+    }
+  ],
+  "users": [
+    {
+      "name": "$MEMBER_USER"
+    },
+    {
+      "name": "$ADMIN_USER"
+    }
+  ],
+  "teams": [
+    {
+      "name": "Maintainers",
+      "members": ["$MEMBER_USER", "$ADMIN_USER"],
+      "repositories": [
+        {
+          "name": "repo_1",
+          "role": "maintain"
+        },
+        {
+          "name": "repo_2",
+          "role": "maintain"
+        }
+      ]
+    },
+    {
+      "name": "Triage",
+      "members": ["$MEMBER_USER", "$ADMIN_USER"],
+      "repositories": [
+        {
+          "name": "repo_1",
+          "role": "triage"
+        },
+        {
+          "name": "repo_2",
+          "role": "triage"
+        }
+      ]
+    },
+    {
+      "name": "Pull",
+      "members": ["$MEMBER_USER", "$ADMIN_USER"],
+      "repositories": [
+        {
+          "name": "repo_1",
+          "role": "read"
+        },
+        {
+          "name": "repo_2",
+          "role": "read"
+        }
+      ]
+    },
+    {
+      "name": "Push",
+      "members": ["$MEMBER_USER", "$ADMIN_USER"],
+      "repositories": [
+        {
+          "name": "repo_1",
+          "role": "write"
+        },
+        {
+          "name": "repo_2",
+          "role": "write"
+        }
+      ]
+    },
+    {
+      "name": "Admins",
+      "members": ["$MEMBER_USER", "$ADMIN_USER"],
+      "repositories": [
+        {
+          "name": "repo_1",
+          "role": "admin"
+        },
+        {
+          "name": "repo_2",
+          "role": "admin"
+        }
+      ]
+    }
+  ]
+}

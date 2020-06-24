@@ -1,0 +1,16 @@
+{
+  "repositories": [
+    {
+      "name": "repo_1"
+    },
+    {
+      "name": "repo_2"
+    },
+    {
+      "name": "repo_3"
+    },
+    {
+      "name": "repo_4"
+    }
+  ]
+}

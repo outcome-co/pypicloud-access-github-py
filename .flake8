@@ -1,6 +1,7 @@
 [flake8]
 max-line-length = 130
 max-complexity = 18
+max-annotation-complexity = 5
 count = True
 exclude = .git, dist, .cache, __pycache__
 docstring-convention = google
@@ -39,8 +40,9 @@ ignore = W503, # Allow line break before binary operator
          WPS604, # Allow usage of `pass` or `global var` inside classes
          WPS609, # Allow direct calling of magic methods
          R504, # This rule is so often incorrect
+         WPS602, # Allow staticmethods
 
-per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520
+per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520, WPS214
 # WPS442, # pytest fixtures require shadowing
 # WPS211, # Too many arguments
 # WPS226, # Allow several usage of string constants (> 3)
@@ -50,6 +52,7 @@ per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS60
 # WPS609, # Direct magic method usage
 # WPS118, # Name too long
 # WPS520, # Falsy constant
+# WPS214, # Too many methods
 
 
 
