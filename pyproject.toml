@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "outcome-pypicloud-access-github"
 version = "0.1.0"
-description = "An Github-based access backend for pypicloud."
+description = "A Github-based access backend for pypicloud."
 authors = ["Douglas Willcocks <douglas@outcome.co>"]
 readme = "README.md"
 license = "ISC"
