@@ -256,9 +256,6 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         # Ensure the username matches the token
         return hasattr(result, 'user') and getattr(result.user, 'login', None) == username  # noqa: WPS421, has/getattr
 
-    def _get_password_hash(self, username: str) -> str:  # pragma: no cover
-        return ''
-
     def verify_user(self, username: str, password: str) -> bool:
         """Check the login credentials of a user.
 
@@ -600,3 +597,6 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
             return (True, '')
         except Exception as ex:
             return (False, str(ex))
+
+    def _get_password_hash(self, username: str) -> str:  # pragma: no cover
+        return ''

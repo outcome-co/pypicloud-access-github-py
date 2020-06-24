@@ -58,7 +58,6 @@ def github_nonmember_token():
     return read_from_env('PYPICLOUD_ACCESS_GITHUB_TEST_NONMEMBER_TOKEN')
 
 
-# TODO Document me
 @pytest.fixture(scope='session')
 def additional_admins():
     admins = read_from_env('PYPICLOUD_ACCESS_GITHUB_TEST_ADDITIONAL_ADMINS', None)
