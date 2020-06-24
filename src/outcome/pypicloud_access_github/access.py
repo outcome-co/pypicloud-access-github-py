@@ -175,8 +175,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return {r.node.name: getattr(r.node.object, 'text', None) for r in data.organization.repositories.edges}
 
-    @cached('packages')  # noqa: WPS231, complexity
-    def package_names(self) -> Dict[str, str]:
+    @cached('packages')
+    def package_names(self) -> Dict[str, str]:  # noqa: WPS231, complexity
         """Returns the list of available packages from the GitHub Organization.
 
         Packages are determined by examining each repository and attempting to retrieve
@@ -443,8 +443,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return self.entity_package_permissions(_teams_key, group)
 
-    @cached('repository_permissions')  # noqa: WPS231, cognitive complexity
-    def repository_permissions(self) -> Dict[str, RepositoryPermissions]:
+    @cached('repository_permissions')
+    def repository_permissions(self) -> Dict[str, RepositoryPermissions]:  # noqa: WPS231, cognitive complexity
         """Retrieve the permission set for all the repositories.
 
         Examples:
