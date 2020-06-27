@@ -1,0 +1,43 @@
+{
+  "repositories": [
+    {
+      "name": "package_repository_1",
+      "private": false,
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-1-package\""
+      },
+      "meta": {
+        "package": "package-repository-1-package"
+      }
+    },
+    {
+      "name": "package_repository_2",
+      "private": false,
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-2-package\""
+      },
+      "meta": {
+        "package": "package-repository-2-package"
+      }
+    },
+    {
+      "name": "non_package_repository_1",
+      "private": false
+    },
+    {
+      "name": "malformed_package_repository_1",
+      "private": false,
+      "files": {
+        "./pyproject.toml": "[tool.poetry]\nsome_key = \"package-repository-2-package\""
+      }
+    }
+  ],
+  "users": [
+    {
+      "name": "$MEMBER_USER"
+    },
+    {
+      "name": "$ADMIN_USER"
+    }
+  ]
+}
