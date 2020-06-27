@@ -1,1 +1,10 @@
-.DS_Store
+.vscode/
+**/*.pyc
+coverage
+**/.DS_Store
+**/*__pycache__
+.pytest_cache
+.cache
+**/*.egg-info
+dist
+.env

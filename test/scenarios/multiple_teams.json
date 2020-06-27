@@ -1,0 +1,19 @@
+{
+  "teams": [
+    {
+      "name": "Team A",
+      "members": ["$MEMBER_USER"]
+    },
+    {
+      "name": "Team B"
+    },
+    {
+      "name": "Team C"
+    }
+  ],
+  "users": [
+    {
+      "name": "$MEMBER_USER"
+    }
+  ]
+}

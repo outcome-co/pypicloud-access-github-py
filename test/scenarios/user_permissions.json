@@ -1,0 +1,51 @@
+{
+    "repositories": [
+        {
+            "name": "repo_1",
+            "files": {
+                "./pyproject.toml": "[tool.poetry]\nname = \"repo_1_package\""
+            },
+            "meta": {
+                "package": "repo_1_package"
+            }
+        },
+        {
+            "name": "repo_2",
+            "files": {
+                "./pyproject.toml": "[tool.poetry]\nname = \"repo_2_package\""
+            },
+            "meta": {
+                "package": "repo_2_package"
+            },
+            "collaborators": [
+                {
+                    "name": "$MEMBER_USER",
+                    "role": "maintain"
+                }
+            ]
+        },
+        {
+            "name": "repo_3",
+            "files": {
+                "./pyproject.toml": "[tool.poetry]\nname = \"repo_3_package\""
+            },
+            "meta": {
+                "package": "repo_3_package"
+            },
+            "collaborators": [
+                {
+                    "name": "$MEMBER_USER",
+                    "role": "admin"
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "name": "$ADMIN_USER"
+        },
+        {
+            "name": "$MEMBER_USER"
+        }
+    ]
+}
