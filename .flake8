@@ -41,6 +41,7 @@ ignore = W503, # Allow line break before binary operator
          WPS609, # Allow direct calling of magic methods
          R504, # This rule is so often incorrect
          WPS602, # Allow staticmethods
+         E203, # Whitespace before ':'
 
 per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520, WPS214
 # WPS442, # pytest fixtures require shadowing
