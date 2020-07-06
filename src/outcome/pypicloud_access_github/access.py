@@ -16,16 +16,23 @@ The access backend needs to be configured with an access token that has read-acc
 """
 
 import abc
-import functools
+import logging
 import re
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from cachetools import TTLCache
+from outcome.pypicloud_access_github import cache
 from outcome.pypicloud_access_github.graphql import schema
 from outcome.pypicloud_access_github.graphql.client import Client, Operation
 from pypicloud.access.base import ONE_WEEK, IAccessBackend
 from pyramid.settings import aslist
+
+LOG = logging.getLogger(__name__)
+
+# Build a new dogpile.cache cache region
+# we'll configure it later when the Access.configure method is called
+cache_region = cache.get_cache_region()
+
 
 _read_permission = 'read'
 _write_permission = 'write'
@@ -51,41 +58,13 @@ _permissions_map = {
 _teams_key = 'teams'
 _users_key = 'users'
 
-_cache_size = 100
-_cache_ttl = 300
-
 
 UserRole = Tuple[str, str]
 TeamMemberMap = Dict[str, List[UserRole]]
-
-
 User = Dict[str, Union[str, bool, List[str]]]
 UserWithGroups = User
-
-
 EntityPermissions = Dict[str, Set[str]]
 RepositoryPermissions = Dict[str, EntityPermissions]
-
-
-# Basic cache decorator for methods with no
-# arguments
-def cached(key):  # pragma: only-covered-in-integration-tests
-    def cache_decorator(fn):
-        @functools.wraps(fn)
-        def wrapper(self: 'Access'):
-            cached_value = self.cache.get(key)
-
-            if cached_value:
-                return cached_value
-
-            value = fn(self)
-            self.cache[key] = value
-
-            return value
-
-        return wrapper
-
-    return cache_decorator
 
 
 class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-tests; # noqa: WPS214
@@ -113,7 +92,6 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         self.organization_name = organization
 
         self.client = Client(token)
-        self.cache = TTLCache(_cache_size, _cache_ttl)
 
         self.repo_pattern = repo_pattern
         self.repo_include_list = repo_include_list
@@ -146,7 +124,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return _permissions_map[github_role.lower()]
 
-    @cached('package_files')
+    @cache_region.cache_on_arguments()
     def package_files(self) -> Dict[str, Optional[str]]:
         """Retrieve the map of repositories and the contents of the package files.
 
@@ -159,6 +137,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             Dict[str, Optional[str]]: The mapping of repository names to package file contents.
         """
+        LOG.info('Getting package files')
+
         op, org = self.organization_operation()
 
         # Get the name of all of the repositories
@@ -175,7 +155,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return {r.node.name: getattr(r.node.object, 'text', None) for r in data.organization.repositories.edges}
 
-    @cached('packages')
+    @cache_region.cache_on_arguments()
     def package_names(self) -> Dict[str, str]:  # noqa: WPS231, complexity
         """Returns the list of available packages from the GitHub Organization.
 
@@ -194,6 +174,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             Dict[str, str]: A dict of package names and their associated repositories.
         """
+        LOG.info('Getting package names')
+
         packages = {}
 
         for repository_name, package_file_content in self.package_files().items():
@@ -219,18 +201,25 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
     @classmethod
     def configure(cls, settings) -> Dict[str, Any]:
         base_config = super().configure(settings)
+        organization = settings.get('auth.otc.github.organization')
+
+        LOG.info(f'Configuring Github Auth with organization: {organization}')
+
+        # Configure the cache region
+        cache.configure_cache_region(cache_region, settings, prefix='auth.otc.github.cache')
 
         return {
             **base_config,
             'default_read': aslist(settings.get('pypi.default_read', [])),
             'default_write': aslist(settings.get('pypi.default_write', [])),
             'token': settings.get('auth.otc.github.token'),
-            'organization': settings.get('auth.otc.github.organization'),
+            'organization': organization,
             'repo_pattern': settings.get('auth.otc.github.repo_pattern', '.*'),
             'repo_include_list': aslist(settings.get('auth.otc.github.repo_include_list', [])),
             'repo_exclude_list': aslist(settings.get('auth.otc.github.repo_exclude_list', [])),
         }
 
+    @cache_region.cache_on_arguments()
     def is_valid_token_for_username(self, username: str, token: str) -> bool:
         """Check that the token is associated with the username.
 
@@ -243,6 +232,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         # We create a new client, specifically to verify the user's
         # credentials
+        LOG.info('Checking user token')
+
         user_client = Client(token)
 
         op = user_client.operation()
@@ -256,6 +247,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         # Ensure the username matches the token
         return hasattr(result, 'user') and getattr(result.user, 'login', None) == username  # noqa: WPS421, has/getattr
 
+    @cache_region.cache_on_arguments()
     def verify_user(self, username: str, password: str) -> bool:
         """Check the login credentials of a user.
 
@@ -274,7 +266,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return username in self.users()
 
-    @cached(_teams_key)
+    @cache_region.cache_on_arguments()
     def teams(self) -> TeamMemberMap:
         """Returns a map of GitHub Team names and members.
 
@@ -283,6 +275,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             TeamMemberMap: The teams and their members.
         """
+        LOG.info('Getting teams')
+
         op, org = self.organization_operation()
 
         team = org.teams.edges.node
@@ -306,6 +300,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return teams
 
+    @cache_region.cache_on_arguments()
     def groups(self, username: Optional[str] = None) -> List[str]:
         """Get a list of all groups.
 
@@ -323,6 +318,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return list(self.teams().keys())
 
+    @cache_region.cache_on_arguments()
     def group_members(self, group: str) -> List[str]:
         """Get a list of users that belong to a group.
 
@@ -334,6 +330,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return [username for username, role in self.teams().get(group, [])]
 
+    @cache_region.cache_on_arguments()
     def is_admin(self, username: str) -> bool:
         """Check if the user is an admin.
 
@@ -367,6 +364,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return self.package_permissions(package, _users_key)
 
+    @cache_region.cache_on_arguments()
     def package_permissions(self, package: str, principal_type: str) -> Dict[str, List[str]]:
         """Get a mapping of all entities of the principal type to their permissions for a package.
 
@@ -388,6 +386,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return {u: list(p) for u, p in repo_perms[principal_type].items()}
 
+    @cache_region.cache_on_arguments()
     def entity_package_permissions(self, entity_type: str, entity_name: str) -> List[Dict[str, Union[List[str], str]]]:
         """Get a list of all packages that a user has permissions on.
 
@@ -398,6 +397,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             List[Dict[str, Union[List[str], str]]]: List of dicts. Each dict contains 'package' (str) and 'permissions'.
         """
+        LOG.info('Getting package permissions')
+
         assert entity_type in {_users_key, _teams_key}  # noqa: S101, use of assert
 
         all_repo_perms = self.repository_permissions()
@@ -443,7 +444,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return self.entity_package_permissions(_teams_key, group)
 
-    @cached('repository_permissions')
+    @cache_region.cache_on_arguments()
     def repository_permissions(self) -> Dict[str, RepositoryPermissions]:  # noqa: WPS231, cognitive complexity
         """Retrieve the permission set for all the repositories.
 
@@ -474,6 +475,8 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             Dict[str, RepositoryPermissions]: A dict of repositories and their permissions.
         """
+        LOG.info('Getting repository permissions')
+
         repositories = {}
 
         op, org = self.organization_operation()
@@ -535,6 +538,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return repositories
 
+    @cache_region.cache_on_arguments()
     def user_data(self, username: Optional[str] = None) -> Union[UserWithGroups, List[User]]:
         """Get a list of all users or data for a single user.
 
@@ -553,6 +557,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         return [dict(username=k, admin=v) for k, v in self.users().items()]
 
+    @cache_region.cache_on_arguments()
     def user_groups(self, username: str) -> List[str]:
         """Return the list of groups for a user.
 
@@ -564,13 +569,15 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         """
         return [team for team, user_roles in self.teams().items() if username in dict(user_roles)]
 
-    @cached('users')
+    @cache_region.cache_on_arguments()
     def users(self) -> Dict[str, bool]:
         """Return the list of users and their admin status.
 
         Returns:
             Dict[str, bool]: The set of users and their admin status.
         """
+        LOG.info('Getting users')
+
         op, org = self.organization_operation()
 
         membership = org.members_with_role.edges
