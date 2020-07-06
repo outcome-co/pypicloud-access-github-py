@@ -12,7 +12,15 @@ The package binds the PyPICloud instance to a GitHub Organization, and uses GitH
 
 You can install the package directly from pypi, alongside your `pypicloud` installation.
 
-`poetry add outcome-pypicloud-access-github`
+```sh
+poetry add outcome-pypicloud-access-github
+```
+
+Or, if you want to use `memcache` for caching.
+
+```sh
+poetry add outcome-pypicloud-access-github[memcache]
+```
 
 ### Configuration
 
@@ -27,16 +35,39 @@ auth.otc.github.token = <INSERT YOUR TOKEN HERE>
 
 You can see a sample [here](./samples/server.ini).
 
+#### Caching
+
+Retrieving the authentication information from GitHub can be a relatively slow process, depending on the size of your organization. The plugin implements an internal TTL cache using [dogpile.cache](https://dogpilecache.sqlalchemy.org/en/latest/) to avoid hitting GitHub on each request.
+
+By default the cache backend is an in-memory cache, that is not shared across threads or processes. You can configure the cache to use a `memcache` instance that will be shared amongst threads/processes.
+
+```ini
+auth.otc.github.cache.backend = memory  # Use the memory backend
+auth.otc.github.cache.expiration = 300  # Expire the cache items after 300s
+```
+
+For `memcache`:
+
+```ini
+auth.otc.github.cache.backend = memcache  # Use the memcache backend
+auth.otc.github.cache.expiration = 300  # Expire the cache items after 300s
+auth.otc.github.cache.memcache.url = 127.0.0.1:11211  # The server:port of your memcache instance
+```
+
+#### Options
 
 The full list of configuration options:
 
-| Option                              |  Default | Description                                                                           |
-| ----------------------------------- | -------- | ------------------------------------------------------------------------------------- |
-| `auth.otc.github.token`             | None     |  The Github Token used to query Github for the auth information                       |
-| `auth.otc.github.organization`      | None     | The Github Organization name to use as a directory                                    |
-| `auth.otc.github.repo_pattern`      | `.*`     | A pattern that will be interpreted as a regular expression to filter repository names |
-| `auth.otc.github.repo_include_list` | `[]`     | A list of repository names to include. Names not in the list will be excluded         |
-| `auth.otc.github.repo_exclude_list` | `[]`     | A list of repository names to exclude. Names in the list will be excluded             |
+| Option                               |  Default          | Description                                                                           |
+| ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------- |
+| `auth.otc.github.token`              | None              |  The Github Token used to query Github for the auth information                       |
+| `auth.otc.github.organization`       | None              | The Github Organization name to use as a directory                                    |
+| `auth.otc.github.repo_pattern`       | `.*`              | A pattern that will be interpreted as a regular expression to filter repository names |
+| `auth.otc.github.repo_include_list`  | `[]`              | A list of repository names to include. Names not in the list will be excluded         |
+| `auth.otc.github.repo_exclude_list`  | `[]`              | A list of repository names to exclude. Names in the list will be excluded             |
+| `auth.otc.github.cache.backend`      | `memory`          | The cache backend to use, can be `memory` or `memcache`                               |
+| `auth.otc.github.cache.expiration`   |  `300`            | The TTL for each cache key                                                            |
+| `auth.otc.github.cache.memcache.url` | `127.0.0.1:11211` | The url of the memcache server                                                        |
 
 #### Github Token
 
