@@ -199,6 +199,14 @@ version = "0.4.3"
 
 [[package]]
 category = "dev"
+description = "Simple library for color and formatting to terminal"
+name = "colored"
+optional = false
+python-versions = "*"
+version = "1.4.2"
+
+[[package]]
+category = "dev"
 description = "Code coverage measurement for Python"
 name = "coverage"
 optional = false
@@ -915,8 +923,8 @@ category = "dev"
 description = "A package containing common dev dependencies for python projects."
 name = "outcome-devkit"
 optional = false
-python-versions = ">=3.7,<4.0"
-version = "2.0.1"
+python-versions = ">=3.8,<4.0"
+version = "3.0.0"
 
 [package.dependencies]
 black = ">=19.10b0,<20.0"
@@ -935,12 +943,12 @@ flake8-return = ">=1.1.1,<2.0.0"
 ipython = ">=7.13.0,<8.0.0"
 isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
-mypy = ">=0.780,<0.781"
-outcome-utils = ">=1.1.0,<2.0.0"
+mypy = ">=0.780,<0.783"
+outcome-utils = ">=1.3.1"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
 pytest = ">=5.3.5,<6.0.0"
-pytest-asyncio = ">=0.12.0,<0.13.0"
+pytest-asyncio = ">=0.12,<0.15"
 wemake-python-styleguide = ">=0.14.0,<0.15.0"
 
 [[package]]
@@ -948,11 +956,13 @@ category = "dev"
 description = "A collection of python utils."
 name = "outcome-utils"
 optional = false
-python-versions = ">=3.7,<4.0"
-version = "1.2.1"
+python-versions = ">=3.8,<4.0"
+version = "3.0.0"
 
 [package.dependencies]
+colored = ">=1.4.2,<2.0.0"
 jinja2 = ">=2.11.2,<3.0.0"
+toml = ">=0.10.1,<0.11.0"
 
 [[package]]
 category = "dev"
@@ -1568,7 +1578,7 @@ version = "0.14.0"
 cli = ["click (>=5.0)"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Pure python memcached client"
 name = "python-memcached"
 optional = false
@@ -1979,10 +1989,10 @@ transaction = ">=1.6.0"
 test = ["zope.testing"]
 
 [extras]
-memcache = []
+memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "f55a350c0308532cf77bf617d56094553cd15752fdd95e75872a0d89e5e4a10a"
+content-hash = "59cff9203039c64aa94c52155515941c6190675c1d7fba3ada05d1592919b6c9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2082,6 +2092,9 @@ click = [
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
+]
+colored = [
+    {file = "colored-1.4.2.tar.gz", hash = "sha256:056fac09d9e39b34296e7618897ed1b8c274f98423770c2980d829fd670955ed"},
 ]
 coverage = [
     {file = "coverage-5.1-cp27-cp27m-macosx_10_12_x86_64.whl", hash = "sha256:0cb4be7e784dcdc050fc58ef05b71aa8e89b7e6636b99967fadbdba694cf2b65"},
@@ -2404,12 +2417,12 @@ nodeenv = [
     {file = "nodeenv-1.4.0-py2.py3-none-any.whl", hash = "sha256:4b0b77afa3ba9b54f4b6396e60b0c83f59eaeb2d63dc3cc7a70f7f4af96c82bc"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-2.0.1.tar.gz", hash = "sha256:4ea2805387b1b91e3844176cb62973e86746a54f2957edcd35cdd39a8a6808ff"},
-    {file = "outcome_devkit-2.0.1-py3-none-any.whl", hash = "sha256:28f89f8f16886eb42e81578e66b0699d1b0b3ce2f02c0c0ddd967c39684fbb29"},
+    {file = "outcome-devkit-3.0.0.tar.gz", hash = "sha256:0a7bfaad94f93fde7701af6bca746feccfb5468c008b39315e250ab6d4766018"},
+    {file = "outcome_devkit-3.0.0-py3-none-any.whl", hash = "sha256:8aa9889661d8b070d04b82a7f76674574be31652a21166afcc7438c0533e3e35"},
 ]
 outcome-utils = [
-    {file = "outcome-utils-1.2.1.tar.gz", hash = "sha256:5679c9790f9243b7e6cc7ee775f9a3c7ade28e35197fb998b4bbcddb908bbe16"},
-    {file = "outcome_utils-1.2.1-py3-none-any.whl", hash = "sha256:322e7133359426e1592edbbe7d335d022f66e9fa2fc8f4f2a7220facc25e1731"},
+    {file = "outcome-utils-3.0.0.tar.gz", hash = "sha256:c81759cccbf2898d3907e13e938912a7a476d7c29189975ca10df5abddb95439"},
+    {file = "outcome_utils-3.0.0-py3-none-any.whl", hash = "sha256:ad7342db07767878efa242d8b31ac5fc3a8b9d04a9d98f81afb672c86e8ddd3d"},
 ]
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},

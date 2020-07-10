@@ -26,7 +26,7 @@ python-memcached = {version = "^1.59", optional = true }
 memcache = ["python-memcached"]
 
 [tool.poetry.dev-dependencies]
-outcome-devkit = "2.0.1"
+outcome-devkit = "3.0.0"
 pytest-dotenv = "^0.5.1"
 PyGithub = "^1.51"
 pydantic = "^1.5.1"
