@@ -1670,7 +1670,7 @@ description = "Simple GraphQL Client"
 name = "sgqlc"
 optional = false
 python-versions = ">=3.6"
-version = "10.1"
+version = "11.0"
 
 [package.dependencies]
 graphql-core = "*"
@@ -1992,7 +1992,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "59cff9203039c64aa94c52155515941c6190675c1d7fba3ada05d1592919b6c9"
+content-hash = "7c22412e3d6e7c089e73cf57afcfd05f53bc53cd44e58028de62b44488ec1289"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2736,9 +2736,9 @@ s3transfer = [
     {file = "s3transfer-0.3.3.tar.gz", hash = "sha256:921a37e2aefc64145e7b73d50c71bb4f26f46e4c9f414dc648c6245ff92cf7db"},
 ]
 sgqlc = [
-    {file = "sgqlc-10.1-py3-none-any.whl", hash = "sha256:df8caac73078d230e8e94c9cb403e8d2fe1803f2b3a202a4f107c86094bab460"},
-    {file = "sgqlc-10.1-py3.7.egg", hash = "sha256:92018c89058671b77948d6d5967da9be8e15c96ad439464205e9a8f705ac7523"},
-    {file = "sgqlc-10.1.tar.gz", hash = "sha256:b0f3da4e4f08ceec41bf79b599f8703fb3cf110c2b2adc7a44c1605b13f86f88"},
+    {file = "sgqlc-11.0-py3-none-any.whl", hash = "sha256:0670a53229c4d7884760c1f351a4134aa0317499682079a41743e4092780bcf2"},
+    {file = "sgqlc-11.0-py3.7.egg", hash = "sha256:8aae431597e388934cb5431f86a50775f9ecad4cd7eceb0597acc54dfa262015"},
+    {file = "sgqlc-11.0.tar.gz", hash = "sha256:0c093c67aace27af224ef994519a6e52d674b02f03756f380cc750c0af0731de"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
