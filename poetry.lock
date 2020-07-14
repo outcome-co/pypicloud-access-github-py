@@ -924,7 +924,7 @@ description = "A package containing common dev dependencies for python projects.
 name = "outcome-devkit"
 optional = false
 python-versions = ">=3.8,<4.0"
-version = "3.0.0"
+version = "3.0.1"
 
 [package.dependencies]
 black = ">=19.10b0,<20.0"
@@ -944,7 +944,7 @@ ipython = ">=7.13.0,<8.0.0"
 isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
 mypy = ">=0.780,<0.783"
-outcome-utils = ">=1.3.1"
+outcome-utils = ">=3.1.0,<4.0.0"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
 pytest = ">=5.3.5,<6.0.0"
@@ -957,7 +957,7 @@ description = "A collection of python utils."
 name = "outcome-utils"
 optional = false
 python-versions = ">=3.8,<4.0"
-version = "3.0.0"
+version = "3.1.0"
 
 [package.dependencies]
 colored = ">=1.4.2,<2.0.0"
@@ -1992,7 +1992,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "7c22412e3d6e7c089e73cf57afcfd05f53bc53cd44e58028de62b44488ec1289"
+content-hash = "91fae06f7668b934c40398d1c8b68f953d74026cebd1d7cbbeeb26d9e6d6040d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2417,12 +2417,12 @@ nodeenv = [
     {file = "nodeenv-1.4.0-py2.py3-none-any.whl", hash = "sha256:4b0b77afa3ba9b54f4b6396e60b0c83f59eaeb2d63dc3cc7a70f7f4af96c82bc"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-3.0.0.tar.gz", hash = "sha256:0a7bfaad94f93fde7701af6bca746feccfb5468c008b39315e250ab6d4766018"},
-    {file = "outcome_devkit-3.0.0-py3-none-any.whl", hash = "sha256:8aa9889661d8b070d04b82a7f76674574be31652a21166afcc7438c0533e3e35"},
+    {file = "outcome-devkit-3.0.1.tar.gz", hash = "sha256:f93ebac27d74f2eb7145430844282bae32d8a24494403740972f3d620467068a"},
+    {file = "outcome_devkit-3.0.1-py3-none-any.whl", hash = "sha256:ba687258b2e08285a55cb5adf6ae9d6a6f2ee56b617efa9e63638697478d2d98"},
 ]
 outcome-utils = [
-    {file = "outcome-utils-3.0.0.tar.gz", hash = "sha256:c81759cccbf2898d3907e13e938912a7a476d7c29189975ca10df5abddb95439"},
-    {file = "outcome_utils-3.0.0-py3-none-any.whl", hash = "sha256:ad7342db07767878efa242d8b31ac5fc3a8b9d04a9d98f81afb672c86e8ddd3d"},
+    {file = "outcome-utils-3.1.0.tar.gz", hash = "sha256:95cdeedec940c4a9b4ad3d022009b490c49602258e4638cadef2cbde8eb88835"},
+    {file = "outcome_utils-3.1.0-py3-none-any.whl", hash = "sha256:0833f75cb56b2d9c315ec75b77b963f41e4a54853154f96ef497d943c831e09d"},
 ]
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
