@@ -71,7 +71,7 @@ def configure_cache_region(cache_region: CacheRegion, settings: Dict[str, Any], 
 
     # Determine the backend
     backend = settings.get(backend_key, _default_cache_backend)
-    expiration = settings.get(expiration_key, _default_expiration)
+    expiration = int(settings.get(expiration_key, _default_expiration))
 
     # Find all the args that make sense for the backend
     backend_arg_prefix = f'{prefix}.{backend}.'
