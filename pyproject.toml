@@ -39,6 +39,7 @@ uwsgi = "^2.0.19"
 pastescript = "^3.2.0"
 waitress = "^1.4.4"
 python-memcached = "^1.59"
+redis = "^3.5.3"
 
 
 [tool.isort]
