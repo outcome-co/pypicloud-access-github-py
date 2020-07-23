@@ -41,6 +41,9 @@ class TestVerifyUser:
     def test_valid_login(self, github_access: Access, github_member_username, github_member_token):
         assert github_access.verify_user(github_member_username, github_member_token)
 
+    def test_valid_login_valid_token_unassociated(self, github_access: Access, github_member_username, github_nonmember_token):
+        assert not github_access.verify_user(github_member_username, github_nonmember_token)
+
     def test_invalid(self, github_access: Access, unknown_member):
         assert not github_access.verify_user(unknown_member, 'invalid token')
 

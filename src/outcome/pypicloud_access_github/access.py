@@ -239,13 +239,13 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         op = user_client.operation()
 
         # Get the user node, and its login
-        user = op.user(login=username)
+        user = op.viewer()
         user.login()
 
         result = user_client.execute(op)
 
         # Ensure the username matches the token
-        return hasattr(result, 'user') and getattr(result.user, 'login', None) == username  # noqa: WPS421, has/getattr
+        return hasattr(result, 'viewer') and getattr(result.viewer, 'login', None) == username  # noqa: WPS421, has/getattr
 
     @cache_region.cache_on_arguments()
     def verify_user(self, username: str, password: str) -> bool:
