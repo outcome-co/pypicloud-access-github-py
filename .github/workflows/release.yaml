@@ -40,7 +40,7 @@ jobs:
           uses: actions/cache@v2
           with:
             path: ${{ env.PIP_CACHE_DIR }}
-            key: pip-${{ hashFiles('**/pyproject.toml') }}
+            key: pip-${{ hashFiles('**/poetry.lock') }}
 
         - name: "Install build system"
           run: make install-build-system
