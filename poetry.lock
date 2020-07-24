@@ -595,6 +595,14 @@ version = "0.2.3"
 flake8 = "*"
 
 [[package]]
+category = "dev"
+description = "Plugin for nose or pytest that automatically reruns flaky tests."
+name = "flaky"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "3.7.0"
+
+[[package]]
 category = "main"
 description = "Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+"
 name = "funcsigs"
@@ -2003,7 +2011,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "1a95039bdfc6238d5ca3edac1f35435703eb78cbb94f8cc865dbf805aa446710"
+content-hash = "2283f52a5894b27ccebf5a1549a7759167140db40d98797b0baa5d00dee6cfe1"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2280,6 +2288,10 @@ flake8-rst-docstrings = [
 flake8-string-format = [
     {file = "flake8-string-format-0.2.3.tar.gz", hash = "sha256:774d56103d9242ed968897455ef49b7d6de272000cfa83de5814273a868832f1"},
     {file = "flake8_string_format-0.2.3-py2.py3-none-any.whl", hash = "sha256:68ea72a1a5b75e7018cae44d14f32473c798cf73d75cbaed86c6a9a907b770b2"},
+]
+flaky = [
+    {file = "flaky-3.7.0-py2.py3-none-any.whl", hash = "sha256:d6eda73cab5ae7364504b7c44670f70abed9e75f77dd116352f662817592ec9c"},
+    {file = "flaky-3.7.0.tar.gz", hash = "sha256:3ad100780721a1911f57a165809b7ea265a7863305acb66708220820caf8aa0d"},
 ]
 funcsigs = [
     {file = "funcsigs-1.0.2-py2.py3-none-any.whl", hash = "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca"},

@@ -40,16 +40,10 @@ jobs:
           uses: actions/cache@v2
           with:
             path: ${{ env.PIP_CACHE_DIR }}
-            key: pip-${{ hashFiles('**/pyproject.toml') }}
+            key: pip-${{ hashFiles('**/poetry.lock') }}
 
-        - name: Configure poetry cache
-          uses: actions/cache@v2
-          with:
-            path: ${{ env.POETRY_CACHE_DIR }}
-            key: poetry-${{ hashFiles('**/pyproject.toml') }}
-
-        - name: "Install dev dependencies"
-          run: make dev-setup
+        - name: "Install build system"
+          run: make install-build-system
 
         - name: "Publish package"
           run: make publish

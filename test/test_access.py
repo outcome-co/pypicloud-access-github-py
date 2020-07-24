@@ -26,6 +26,7 @@ class TestPermissionMap:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestHealthCheck:
     def test_has_correct_scope(self, github_access: Access):
         health, _ = github_access.check_health()
@@ -37,9 +38,13 @@ class TestHealthCheck:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestVerifyUser:
     def test_valid_login(self, github_access: Access, github_member_username, github_member_token):
         assert github_access.verify_user(github_member_username, github_member_token)
+
+    def test_valid_login_valid_token_unassociated(self, github_access: Access, github_member_username, github_nonmember_token):
+        assert not github_access.verify_user(github_member_username, github_nonmember_token)
 
     def test_invalid(self, github_access: Access, unknown_member):
         assert not github_access.verify_user(unknown_member, 'invalid token')
@@ -55,6 +60,7 @@ class TestVerifyUser:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestGroups:
     def test_all_groups(self, github_access: Access, multiple_teams_scenario):
         team_names = {t.name for t in multiple_teams_scenario.teams}
@@ -83,6 +89,7 @@ class TestGroups:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestIsAdmin:
     def test_member_non_admin(self, github_access: Access, github_member_username):
         assert not github_access.is_admin(github_member_username)
@@ -95,6 +102,7 @@ class TestIsAdmin:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestUserPermissions:
     def test_admin_has_all_access_to_all_packages(
         self, github_access: Access, user_permissions_scenario, github_admin_username, read_write_permission,
@@ -150,6 +158,7 @@ class TestUserPermissions:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestGroupPermissions:
     def get_team_with_permission_on_repo(self, scenario, permission, repo):
         for team in scenario.teams:
@@ -195,6 +204,7 @@ class TestGroupPermissions:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestUserData:
     def test_user_admin_status(
         self, github_access: Access, user_data_scenario, github_admin_username, github_member_username, additional_admins,
@@ -219,6 +229,7 @@ class TestUserData:
 
 
 @skip_for_unit
+@pytest.mark.flaky
 class TestPackages:
     def test_get_all_poetry_packages(self, github_access: Access, packages_scenario):
         scenario_packages = {r.meta['package'] for r in packages_scenario.repositories if 'package' in r.meta}
