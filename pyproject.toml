@@ -42,6 +42,7 @@ python-memcached = "^1.59"
 redis = "^3.5.3"
 flaky = "^3.7.0"
 tenacity = "^6.2.0"
+pystache = "^0.5.4"
 
 
 [tool.isort]

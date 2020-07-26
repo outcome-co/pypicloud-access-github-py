@@ -3,7 +3,7 @@
     {
       "name": "repo_1",
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nname = \"repo_1_package\""
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_1_package-{{session_id}}\""
       },
       "meta": {
         "package": "repo_1_package"
@@ -12,7 +12,7 @@
     {
       "name": "repo_2",
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nname = \"repo_2_package\""
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_2_package-{{session_id}}\""
       },
       "meta": {
         "package": "repo_2_package"
@@ -21,7 +21,7 @@
     {
       "name": "repo_3",
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nname = \"repo_3_package\""
+        "./pyproject.toml": "[tool.poetry]\nname = \"repo_3_package-{{session_id}}\""
       },
       "meta": {
         "comment": "This repo is to test repos without any associated teams",

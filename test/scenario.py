@@ -1,6 +1,7 @@
 from enum import Enum
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set
 
+import pystache
 from pydantic import BaseModel, validator
 
 
@@ -48,6 +49,16 @@ class Repository(NamedSessionObject):
         for user in self.collaborators:
             user.name = user_map.get(user.name, user.name)
 
+    def set_session_id(self, session_id: str):
+        super().set_session_id(session_id)
+
+        for file, file_content in self.files.items():
+            self.files[file] = pystache.render(file_content, session_id=session_id)
+
+        package = self.meta.get('package', None)
+        if package:
+            self.meta['package'] = f'{package}-{session_id}'
+
 
 class Team(NamedSessionObject):
     members: List[str] = []
@@ -80,6 +91,14 @@ class Scenario(SessionObject):
     users: List[UserMembership] = []
     repositories: List[Repository] = []
     teams: List[Team] = []
+
+    @property
+    def team_names(self) -> Set[str]:
+        return {t.name for t in self.teams}
+
+    @property
+    def repo_names(self) -> Set[str]:
+        return {r.name for r in self.repositories}
 
     def set_session_id(self, session_id: str) -> None:
         super().set_session_id(session_id)

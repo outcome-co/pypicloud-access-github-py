@@ -1517,6 +1517,14 @@ version = "0.9.0"
 
 [[package]]
 category = "dev"
+description = "Mustache for Python"
+name = "pystache"
+optional = false
+python-versions = "*"
+version = "0.5.4"
+
+[[package]]
+category = "dev"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
@@ -2025,7 +2033,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "259632d9ebcf4c6435ebed626104dadab9d6d56523efaccec9f42168fb7f29d6"
+content-hash = "58520ff388d63ce9dba4c1b5e225222a23225d33b61aed6c225cb1957879e35d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2693,6 +2701,9 @@ pyreadline = [
 ]
 pyrepl = [
     {file = "pyrepl-0.9.0.tar.gz", hash = "sha256:292570f34b5502e871bbb966d639474f2b57fbfcd3373c2d6a2f3d56e681a775"},
+]
+pystache = [
+    {file = "pystache-0.5.4.tar.gz", hash = "sha256:f7bbc265fb957b4d6c7c042b336563179444ab313fb93a719759111eabd3b85a"},
 ]
 pytest = [
     {file = "pytest-5.4.3-py3-none-any.whl", hash = "sha256:5c0db86b698e8f170ba4582a492248919255fcd4c79b1ee64ace34301fb589a1"},

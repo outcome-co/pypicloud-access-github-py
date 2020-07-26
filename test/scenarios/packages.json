@@ -4,7 +4,7 @@
       "name": "package_repository_1",
       "private": false,
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-1-package\""
+        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-1-package-{{session_id}}\""
       },
       "meta": {
         "package": "package-repository-1-package"
@@ -14,7 +14,7 @@
       "name": "package_repository_2",
       "private": false,
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-2-package\""
+        "./pyproject.toml": "[tool.poetry]\nname = \"package-repository-2-package-{{session_id}}\""
       },
       "meta": {
         "package": "package-repository-2-package"
@@ -28,7 +28,7 @@
       "name": "malformed_package_repository_1",
       "private": false,
       "files": {
-        "./pyproject.toml": "[tool.poetry]\nsome_key = \"package-repository-2-package\""
+        "./pyproject.toml": "[tool.poetry]\nsome_key = \"package-repository-2-package-{{session_id}}\""
       }
     }
   ]

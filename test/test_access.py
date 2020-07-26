@@ -7,6 +7,8 @@ from outcome.devkit.test_helpers import skip_for_integration, skip_for_unit
 from outcome.pypicloud_access_github import Access
 from outcome.pypicloud_access_github.graphql import schema
 
+from .scenario import Scenario
+
 # This is intentionnally duplicated, to catch regressions
 _permissions_map = {
     'ADMIN': {'read', 'write'},
@@ -63,9 +65,8 @@ class TestVerifyUser:
 @skip_for_unit
 @flaky(max_runs=3)
 class TestGroups:
-    def test_all_groups(self, github_access: Access, multiple_teams_scenario):
-        team_names = {t.name for t in multiple_teams_scenario.teams}
-        assert set(github_access.groups()) == team_names
+    def test_all_groups(self, github_access: Access, multiple_teams_scenario: Scenario):
+        assert multiple_teams_scenario.team_names.issubset(github_access.groups())
 
     def test_groups_for_non_member(self, github_access: Access, multiple_teams_scenario, github_nonmember_username):
         assert github_access.groups(github_nonmember_username) == []
@@ -73,9 +74,11 @@ class TestGroups:
     def test_groups_for_unknown_member(self, github_access: Access, multiple_teams_scenario, unknown_member):
         assert github_access.groups(unknown_member) == []
 
-    def test_groups_for_member_of_one_group(self, github_access: Access, multiple_teams_scenario, github_member_username):
+    def test_groups_for_member_of_one_group(
+        self, github_access: Access, multiple_teams_scenario: Scenario, github_member_username,
+    ):
         groups = {t.name for t in multiple_teams_scenario.teams if github_member_username in t.members}
-        assert set(github_access.groups(github_member_username)) == set(groups)
+        assert groups.issubset(set(github_access.groups(github_member_username)))
 
     def test_get_empty_group(self, github_access: Access, multiple_teams_scenario):
         group_name = next((t.name for t in multiple_teams_scenario.teams if not t.members))
@@ -174,7 +177,6 @@ class TestGroupPermissions:
         package = repo.meta['package']
         repo_perms = github_access.group_permissions(package)
         team = self.get_team_with_permission_on_repo(scenario, perm_name, repo.name)
-
         assert set(repo_perms[team]) == permissions
 
     def test_admin_has_read_write(self, github_access: Access, team_permissions_scenario, read_write_permission):
@@ -226,7 +228,7 @@ class TestUserData:
             user_data = github_access.user_data(user.name)
 
             assert user_data['username'] == user.name
-            assert set(user_data['groups']) == teams
+            assert teams.issubset(set(user_data['groups']))
 
 
 @skip_for_unit
@@ -235,7 +237,7 @@ class TestPackages:
     def test_get_all_poetry_packages(self, github_access: Access, packages_scenario):
         scenario_packages = {r.meta['package'] for r in packages_scenario.repositories if 'package' in r.meta}
         packages = github_access.package_names()
-        assert scenario_packages == set(packages.keys())
+        assert scenario_packages.issubset(set(packages.keys()))
 
     def test_exclude_packages(self, github_access: Access, packages_scenario):
         scenario_packages = [(r.meta['package'], r.name) for r in packages_scenario.repositories if 'package' in r.meta]
@@ -248,7 +250,6 @@ class TestPackages:
 
         packages = github_access.package_names()
 
-        assert len(packages) == len(scenario_packages)
         assert excluded_package_name not in packages
 
     def test_include_packages(self, github_access: Access, packages_scenario):
@@ -262,7 +263,6 @@ class TestPackages:
 
         packages = github_access.package_names()
 
-        assert len(packages) == 1
         assert included_package_name in packages
 
     def test_package_pattern(self, github_access: Access, packages_scenario):
@@ -275,8 +275,10 @@ class TestPackages:
         test_pattern = r'-2$'
 
         filtered_scenario_packages = list(filter((lambda p: re.match(test_pattern, p[1]) is not None), scenario_packages))
+        excluded_scenario_packages = {p[0] for p in scenario_packages if p not in filtered_scenario_packages}
         github_access.repo_pattern = test_pattern
 
         packages = github_access.package_names()
 
-        assert set(packages.keys()) == {p for p, r in filtered_scenario_packages}
+        assert {p for p, r in filtered_scenario_packages}.issubset(set(packages.keys()))
+        assert set(packages.keys()) & excluded_scenario_packages == set()

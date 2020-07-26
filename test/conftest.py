@@ -1,7 +1,7 @@
-import os
-from pathlib import Path
 import hashlib
+import os
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict
 
 import pytest
@@ -73,7 +73,7 @@ def additional_admins():
 @pytest.fixture(scope='session')
 def session_id():
     session_key = 'pypi'
-    session_hash = hashlib.sha1(str(datetime.now()).encode('utf-8')).hexdigest()
+    session_hash = hashlib.sha1(str(datetime.now()).encode('utf-8')).hexdigest()  # noqa: S303
     short_hash = session_hash[:8]
     return f'{session_key}-{short_hash}'
 
