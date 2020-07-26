@@ -43,7 +43,7 @@ ignore = W503, # Allow line break before binary operator
          WPS602, # Allow staticmethods
          E203, # Whitespace before ':'
 
-per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520, WPS214
+per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520, WPS214, WPS300
 # WPS442, # pytest fixtures require shadowing
 # WPS211, # Too many arguments
 # WPS226, # Allow several usage of string constants (> 3)
@@ -54,6 +54,7 @@ per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS60
 # WPS118, # Name too long
 # WPS520, # Falsy constant
 # WPS214, # Too many methods
+# WPS300, # Local imports
 
 
 

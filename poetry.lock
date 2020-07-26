@@ -1362,7 +1362,7 @@ description = "Private PyPI backed by S3"
 name = "pypicloud"
 optional = false
 python-versions = ">=3.5"
-version = "1.1.1"
+version = "1.1.2"
 
 [package.dependencies]
 boto3 = ">=1.7.0"
@@ -1391,7 +1391,7 @@ doc = ["numpydoc", "sphinx", "sphinx-rtd-theme"]
 dynamo = ["flywheel (>=0.2.0)"]
 gcs = ["google-cloud-storage (>=1.10.0)"]
 ldap = ["python-ldap"]
-lint = ["black", "isort", "mypy", "pylint (2.3.1)", "sqlalchemy-stubs"]
+lint = ["black", "isort (>=4.2.5,<5)", "mypy", "pylint (2.3.1)", "sqlalchemy-stubs"]
 redis = ["redis"]
 server = ["waitress"]
 test = ["azure-storage-blob (>=12.3.1)", "flywheel (>=0.2.0)", "google-cloud-storage (>=1.10.0)", "mock", "mockldap", "moto", "mysqlclient", "nose", "psycopg2-binary", "python-ldap", "redis", "requests", "vcrpy", "webtest"]
@@ -1514,6 +1514,14 @@ name = "pyrepl"
 optional = false
 python-versions = "*"
 version = "0.9.0"
+
+[[package]]
+category = "dev"
+description = "Mustache for Python"
+name = "pystache"
+optional = false
+python-versions = "*"
+version = "0.5.4"
 
 [[package]]
 category = "dev"
@@ -1753,6 +1761,20 @@ version = "2.0.1"
 
 [package.dependencies]
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
+
+[[package]]
+category = "dev"
+description = "Retry code until it succeeds"
+name = "tenacity"
+optional = false
+python-versions = "*"
+version = "6.2.0"
+
+[package.dependencies]
+six = ">=1.9.0"
+
+[package.extras]
+doc = ["reno", "sphinx", "tornado (>=4.5)"]
 
 [[package]]
 category = "dev"
@@ -2011,7 +2033,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "2283f52a5894b27ccebf5a1549a7759167140db40d98797b0baa5d00dee6cfe1"
+content-hash = "58520ff388d63ce9dba4c1b5e225222a23225d33b61aed6c225cb1957879e35d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2646,8 +2668,8 @@ pyparsing = [
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pypicloud = [
-    {file = "pypicloud-1.1.1-py2.py3-none-any.whl", hash = "sha256:719f8e7472170a62fdb5de5a037477708c2950f30415ce07accc6f01e40b8076"},
-    {file = "pypicloud-1.1.1.tar.gz", hash = "sha256:e8792ea7623627fe49a40d7d7cd763f261bc3462ee3a868c3764d64f93e30c57"},
+    {file = "pypicloud-1.1.2-py2.py3-none-any.whl", hash = "sha256:3a1f07eea4e1d975ae5b8fd72e91e91e622be376ec6f828b32d60e319653a7ce"},
+    {file = "pypicloud-1.1.2.tar.gz", hash = "sha256:32dd8b7cf60a631860066def3f9cda082686ab11000bae977359faf995d0f78f"},
 ]
 pyramid = [
     {file = "pyramid-1.10.4-py2.py3-none-any.whl", hash = "sha256:51bf64647345237c00d2fe558935e0e4938c156e29f17e203457fd8e1d757dc7"},
@@ -2679,6 +2701,9 @@ pyreadline = [
 ]
 pyrepl = [
     {file = "pyrepl-0.9.0.tar.gz", hash = "sha256:292570f34b5502e871bbb966d639474f2b57fbfcd3373c2d6a2f3d56e681a775"},
+]
+pystache = [
+    {file = "pystache-0.5.4.tar.gz", hash = "sha256:f7bbc265fb957b4d6c7c042b336563179444ab313fb93a719759111eabd3b85a"},
 ]
 pytest = [
     {file = "pytest-5.4.3-py3-none-any.whl", hash = "sha256:5c0db86b698e8f170ba4582a492248919255fcd4c79b1ee64ace34301fb589a1"},
@@ -2812,6 +2837,10 @@ sqlalchemy = [
 stevedore = [
     {file = "stevedore-2.0.1-py3-none-any.whl", hash = "sha256:c4724f8d7b8f6be42130663855d01a9c2414d6046055b5a65ab58a0e38637688"},
     {file = "stevedore-2.0.1.tar.gz", hash = "sha256:609912b87df5ad338ff8e44d13eaad4f4170a65b79ae9cb0aa5632598994a1b7"},
+]
+tenacity = [
+    {file = "tenacity-6.2.0-py2.py3-none-any.whl", hash = "sha256:5a5d3dcd46381abe8b4f82b5736b8726fd3160c6c7161f53f8af7f1eb9b82173"},
+    {file = "tenacity-6.2.0.tar.gz", hash = "sha256:29ae90e7faf488a8628432154bb34ace1cca58244c6ea399fd33f066ac71339a"},
 ]
 testfixtures = [
     {file = "testfixtures-6.14.1-py2.py3-none-any.whl", hash = "sha256:30566e24a1b34e4d3f8c13abf62557d01eeb4480bcb8f1745467bfb0d415a7d9"},

@@ -1,14 +1,14 @@
 {
   "teams": [
     {
-      "name": "Team A",
+      "name": "team_a",
       "members": ["$MEMBER_USER"]
     },
     {
-      "name": "Team B"
+      "name": "team_b"
     },
     {
-      "name": "Team C"
+      "name": "team_c"
     }
   ],
   "users": [
