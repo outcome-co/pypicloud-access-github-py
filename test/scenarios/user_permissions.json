@@ -42,9 +42,6 @@
     ],
     "users": [
         {
-            "name": "$ADMIN_USER"
-        },
-        {
             "name": "$MEMBER_USER"
         }
     ]

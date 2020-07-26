@@ -39,7 +39,7 @@
   ],
   "teams": [
     {
-      "name": "Maintainers",
+      "name": "maintainers",
       "members": ["$MEMBER_USER", "$ADMIN_USER"],
       "repositories": [
         {
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "Triage",
+      "name": "triage",
       "members": ["$MEMBER_USER", "$ADMIN_USER"],
       "repositories": [
         {
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "name": "Pull",
+      "name": "pull",
       "members": ["$MEMBER_USER", "$ADMIN_USER"],
       "repositories": [
         {
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "name": "Push",
+      "name": "push",
       "members": ["$MEMBER_USER", "$ADMIN_USER"],
       "repositories": [
         {
@@ -95,7 +95,7 @@
       ]
     },
     {
-      "name": "Admins",
+      "name": "admins",
       "members": ["$MEMBER_USER", "$ADMIN_USER"],
       "repositories": [
         {

@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+import hashlib
+from datetime import datetime
 from typing import Any, Dict
 
 import pytest
@@ -69,6 +71,14 @@ def additional_admins():
 
 
 @pytest.fixture(scope='session')
+def session_id():
+    session_key = 'pypi'
+    session_hash = hashlib.sha1(str(datetime.now()).encode('utf-8')).hexdigest()
+    short_hash = session_hash[:8]
+    return f'{session_key}-{short_hash}'
+
+
+@pytest.fixture(scope='session')
 def user_map(github_member_username: str, github_admin_username: str):
     return {
         '$MEMBER_USER': github_member_username,
@@ -106,11 +116,12 @@ def scenario_file(name: str) -> Path:
 
 
 @pytest.fixture(scope='session')
-def scenario_context(github_token: str, github_organization: str, user_map: Dict[str, str]):
+def scenario_context(github_token: str, github_organization: str, user_map: Dict[str, str], session_id: str):
     return {
         'token': github_token,
         'organization': github_organization,
         'user_map': user_map,
+        'session_id': session_id,
     }
 
 

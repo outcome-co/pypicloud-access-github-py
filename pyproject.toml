@@ -41,6 +41,7 @@ waitress = "^1.4.4"
 python-memcached = "^1.59"
 redis = "^3.5.3"
 flaky = "^3.7.0"
+tenacity = "^6.2.0"
 
 
 [tool.isort]

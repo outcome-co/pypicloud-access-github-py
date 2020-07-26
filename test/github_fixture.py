@@ -2,6 +2,7 @@ import json
 from contextlib import contextmanager
 from typing import Dict, List
 
+import tenacity
 from github import Github, GithubException, Organization
 
 from .scenario import Repository, Scenario, Team  # noqa: WPS300
@@ -16,36 +17,43 @@ def map_role(role):
     return _role_map.get(role, role)
 
 
-def load_scenario(path: str, user_map: Dict[str, str]) -> Scenario:
+def load_scenario(path: str, user_map: Dict[str, str], session_id: str) -> Scenario:
     with open(path, 'r') as handle:
         data = json.load(handle)
 
     scenario = Scenario(**data)
+
+    scenario.set_session_id(session_id)
     scenario.update_users(user_map)
 
     return scenario
 
 
 @contextmanager
-def github_scenario(token: str, organization: str, path: str, user_map: Dict[str, str]):
-    scenario = load_scenario(path, user_map)
+def github_scenario(token: str, organization: str, path: str, user_map: Dict[str, str], session_id: str):
+    scenario = load_scenario(path, user_map, session_id)
     client = Github(token)
     organization = client.get_organization(organization)
 
-    reset_github(organization)
+    reset_github(organization, scenario)
 
     try:
         build_scenario(client, organization, scenario)
         yield scenario
     finally:
-        reset_github(organization)
+        reset_github(organization, scenario)
 
 
-def reset_github(organization: Organization.Organization) -> None:
+def reset_github(organization: Organization.Organization, scenario: Scenario) -> None:
+
+    scenario_team_names = {t.name for t in scenario.teams}
+    scenario_repo_names = {r.name for r in scenario.repositories}
+
     # Delete teams
     for team in organization.get_teams():
         try:
-            team.delete()
+            if team.name in scenario_team_names:
+                team.delete()
 
         # Teams are hierarchical, so we may have already deleted it
         # by deleting a parent
@@ -55,7 +63,8 @@ def reset_github(organization: Organization.Organization) -> None:
     # Delete repos
     for repo in organization.get_repos():
         try:
-            repo.delete()
+            if repo.name in scenario_repo_names:
+                repo.delete()
         except GithubException:
             pass
 
@@ -80,11 +89,21 @@ def build_repositories(user_cache: UserCache, organization: Organization.Organiz
     for repo in repositories:
         new_repo = organization.create_repo(name=repo.name, private=repo.private)
 
+        # Sometimes the repo isn't ready when we try to add users or files, so we
+        # try a couple of times
+        @tenacity.retry(stop=tenacity.stop_after_attempt(3), wait=tenacity.wait_fixed(1))
+        def add_user_to_repo(user, role):
+            new_repo.add_to_collaborators(user, role)
+
+        @tenacity.retry(stop=tenacity.stop_after_attempt(3), wait=tenacity.wait_fixed(1))
+        def add_file_to_repo(file, file_content):
+            new_repo.create_file(file, 'Test File', file_content)
+
         for user in repo.collaborators:
-            new_repo.add_to_collaborators(user_cache[user.name], map_role(user.role.value))
+            add_user_to_repo(user_cache[user.name], map_role(user.role.value))
 
         for file, file_content in repo.files.items():
-            new_repo.create_file(file, 'Test File', file_content)
+            add_file_to_repo(file, file_content)
 
 
 def build_teams(
@@ -104,7 +123,11 @@ def build_teams(
             user = user_cache[member]
             new_team.add_membership(user, 'member')
 
-        for repo in team.repositories:
-            repository = organization.get_repo(repo.name)
+        @tenacity.retry(stop=tenacity.stop_after_attempt(3), wait=tenacity.wait_fixed(1))
+        def add_team_to_repo(repo_name, role):
+            repository = organization.get_repo(repo_name)
             new_team.add_to_repos(repository)
-            new_team.set_repo_permission(repository, map_role(repo.role.value))
+            new_team.set_repo_permission(repository, role)
+
+        for repo in team.repositories:
+            add_team_to_repo(repo.name, map_role(repo.role.value))

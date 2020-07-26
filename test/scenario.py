@@ -9,6 +9,22 @@ class BaseSchema(BaseModel):
         extra = 'forbid'
 
 
+class SessionObject(BaseSchema):
+    session_id: str = None
+
+    def set_session_id(self, session_id: str):
+        assert self.session_id is None
+        self.session_id = session_id  # noqa: WPS601
+
+
+class NamedSessionObject(SessionObject):
+    name: str
+
+    def set_session_id(self, session_id: str):
+        super().set_session_id(session_id)
+        self.name = f'{self.name}-{session_id}'
+
+
 class RepositoryRole(Enum):
     admin = 'admin'
     maintain = 'maintain'
@@ -17,13 +33,11 @@ class RepositoryRole(Enum):
     write = 'write'
 
 
-class RepositoryMembership(BaseSchema):
-    name: str
+class RepositoryMembership(NamedSessionObject):
     role: RepositoryRole
 
 
-class Repository(BaseSchema):
-    name: str
+class Repository(NamedSessionObject):
     private: bool = False
     files: Dict[str, str] = {}
     meta: Dict[str, Any] = {}
@@ -35,14 +49,17 @@ class Repository(BaseSchema):
             user.name = user_map.get(user.name, user.name)
 
 
-class Team(BaseSchema):
-    name: str
+class Team(NamedSessionObject):
     members: List[str] = []
-
     repositories: List[RepositoryMembership] = []
 
     def update_users(self, user_map: Dict[str, str]):
         self.members = [user_map.get(m, m) for m in self.members]  # noqa: WPS601
+
+    def set_session_id(self, session_id: str):
+        super().set_session_id(session_id)
+        for membership in self.repositories:
+            membership.set_session_id(session_id)
 
 
 Team.update_forward_refs()
@@ -57,12 +74,21 @@ class UserMembership(BaseSchema):
     name: str
 
 
-class Scenario(BaseSchema):
+class Scenario(SessionObject):
     # Users has to go before teams for validation
     # https://pydantic-docs.helpmanual.io/usage/models/#field-ordering
     users: List[UserMembership] = []
     repositories: List[Repository] = []
     teams: List[Team] = []
+
+    def set_session_id(self, session_id: str) -> None:
+        super().set_session_id(session_id)
+
+        for team in self.teams:
+            team.set_session_id(self.session_id)
+
+        for repo in self.repositories:
+            repo.set_session_id(self.session_id)
 
     def update_users(self, user_map: Dict[str, str]):
         for user in self.users:
