@@ -30,8 +30,8 @@ db.url = sqlite:///%(here)s/db.sqlite
 # Github-based authentication 
 pypi.auth = outcome.pypicloud_access_github.Poetry
 
-auth.otc.github.organization = outcome-co
-auth.otc.github.token = 382e98ec827c7b5a82d083145a16c5671617d805
+auth.otc.github.organization = <GITHUB ORG>
+auth.otc.github.token = <GITHUB TOKEN>
 
 # Stores cookies etc. for the pypicloud UI
 session.encrypt_key = FFpoaaM3LAJm8wc9qNQDUoC28hrwumyRJPzMA9X0wgA=

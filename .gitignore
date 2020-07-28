@@ -8,3 +8,4 @@ coverage
 **/*.egg-info
 dist
 .env
+sample/server.ini
