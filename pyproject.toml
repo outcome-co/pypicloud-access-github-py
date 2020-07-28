@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "outcome-pypicloud-access-github"
-version = "1.1.2"
+version = "1.1.3"
 description = "A Github-based access backend for pypicloud."
 authors = ["Douglas Willcocks <douglas@outcome.co>"]
 readme = "README.md"
@@ -33,7 +33,7 @@ click = "^7.1.2"
 python-dotenv = "^0.14.0"
 requests = "^2.24.0"
 pynacl = "^1.4.0"
-pypicloud = {extras = ["gcs"], version = "^1.1.2"}
+pypicloud = {extras = ["gcs"], version = "^1.1.3"}
 uwsgi = "^2.0.19"
 pastescript = "^3.2.0"
 waitress = "^1.4.4"
@@ -86,7 +86,7 @@ exclude = '''
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.1.2"
+version = "1.1.3"
 tag_format = "v$version"
 bump_message = "chore(version): $current_version → $new_version"
 version_files = ["pyproject.toml:version", "README.md:version-badge"]
