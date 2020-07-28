@@ -70,7 +70,7 @@ six = ">=1.10.0"
 stevedore = ">=1.20.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A Session and Caching library with WSGI Middleware"
 name = "beaker"
 optional = false
@@ -108,7 +108,7 @@ typed-ast = ">=1.4.0"
 d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
@@ -121,12 +121,12 @@ jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.17.9"
+version = "1.17.28"
 
 [package.dependencies]
 docutils = ">=0.10,<0.16"
@@ -146,7 +146,7 @@ python-versions = "~=3.5"
 version = "4.1.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
 optional = false
@@ -154,7 +154,7 @@ python-versions = "*"
 version = "2020.6.20"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Foreign Function Interface for Python calling C code."
 name = "cffi"
 optional = false
@@ -173,7 +173,7 @@ python-versions = ">=3.6.1"
 version = "3.1.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Universal encoding detector for Python 2 and 3"
 name = "chardet"
 optional = false
@@ -217,7 +217,7 @@ version = "5.1"
 toml = ["toml"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 name = "cryptography"
 optional = false
@@ -266,7 +266,7 @@ wrapt = ">=1.10,<2"
 dev = ["tox", "bumpversion (<1)", "sphinx (<2)", "PyTest (<5)", "PyTest-Cov (<2.6)", "pytest", "pytest-cov"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Distribution utilities"
 name = "distlib"
 optional = false
@@ -274,7 +274,7 @@ python-versions = "*"
 version = "0.3.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Docutils -- Python Documentation Utilities"
 name = "docutils"
 optional = false
@@ -603,7 +603,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "3.7.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+"
 name = "funcsigs"
 optional = false
@@ -736,7 +736,7 @@ python-versions = ">=3.6,<4"
 version = "3.1.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Integrated process monitor for developing and reloading daemons."
 name = "hupper"
 optional = false
@@ -759,7 +759,7 @@ version = "1.4.20"
 license = ["editdistance"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -836,7 +836,7 @@ qa = ["flake8 (3.7.9)"]
 testing = ["Django (<3.1)", "colorama", "docopt", "pytest (>=3.9.0,<5.0.0)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A very fast and expressive template engine."
 name = "jinja2"
 optional = false
@@ -850,7 +850,7 @@ MarkupSafe = ">=0.23"
 i18n = ["Babel (>=0.8)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "JSON Matching Expressions"
 name = "jmespath"
 optional = false
@@ -858,7 +858,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "0.10.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Safely add untrusted strings to HTML/XML markup."
 name = "markupsafe"
 optional = false
@@ -996,7 +996,7 @@ version = "0.7.0"
 testing = ["docopt", "pytest (>=3.0.7)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "comprehensive password hashing framework supporting over 30 schemes"
 name = "passlib"
 optional = false
@@ -1010,7 +1010,7 @@ build_docs = ["sphinx (>=1.6)", "sphinxcontrib-fulltoc (>=1.2.0)", "cloud-spthem
 totp = ["cryptography"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Tools for using a Web Server Gateway Interface stack"
 name = "paste"
 optional = false
@@ -1025,7 +1025,7 @@ flup = ["flup"]
 openid = ["python-openid"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Load, configure, and compose WSGI applications and servers"
 name = "pastedeploy"
 optional = false
@@ -1121,7 +1121,7 @@ python-versions = "*"
 version = "0.7.5"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A loader interface around multiple config file formats."
 name = "plaster"
 optional = false
@@ -1136,7 +1136,7 @@ docs = ["sphinx", "pylons-sphinx-themes"]
 testing = ["pytest", "pytest-cov"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A loader implementing the PasteDeploy syntax to be used by plaster."
 name = "plaster-pastedeploy"
 optional = false
@@ -1245,7 +1245,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.6.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "C parser in Python"
 name = "pycparser"
 optional = false
@@ -1357,7 +1357,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.7"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Private PyPI backed by S3"
 name = "pypicloud"
 optional = false
@@ -1397,7 +1397,7 @@ server = ["waitress"]
 test = ["azure-storage-blob (>=12.3.1)", "flywheel (>=0.2.0)", "google-cloud-storage (>=1.10.0)", "mock", "mockldap", "moto", "mysqlclient", "nose", "psycopg2-binary", "python-ldap", "redis", "requests", "vcrpy", "webtest"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "The Pyramid Web Framework, a Pylons project"
 name = "pyramid"
 optional = false
@@ -1420,7 +1420,7 @@ docs = ["Sphinx (>=1.8.1)", "docutils", "pylons-sphinx-themes (>=1.0.8)", "pylon
 testing = ["webtest (>=1.3.1)", "zope.component (>=4.0)", "coverage", "nose", "virtualenv"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Beaker session factory backend for Pyramid"
 name = "pyramid-beaker"
 optional = false
@@ -1436,7 +1436,7 @@ docs = ["sphinx", "docutils"]
 testing = ["nose", "coverage"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Useful utilities for every pyramid app"
 name = "pyramid-duh"
 optional = false
@@ -1448,7 +1448,7 @@ pyramid = "*"
 six = "*"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Jinja2 template bindings for the Pyramid web framework"
 name = "pyramid-jinja2"
 optional = false
@@ -1466,7 +1466,7 @@ docs = ["pylons-sphinx-themes (>=0.3)", "Sphinx (>=1.7.5)"]
 testing = ["coverage", "nose (>=1.2.0)", "webtest"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "RPC support for the Pyramid web framework"
 name = "pyramid-rpc"
 optional = false
@@ -1483,7 +1483,7 @@ docs = ["Sphinx (>=1.3.1)", "pylons-sphinx-themes"]
 testing = ["webtest", "coverage", "nose", "pyramid (>=1.4)", "venusian (>=1.0a7)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A package which allows Pyramid requests to join the active transaction"
 name = "pyramid-tm"
 optional = false
@@ -1572,7 +1572,7 @@ pytest = ">=5.0.0"
 python-dotenv = ">=0.9.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
 optional = false
@@ -1640,7 +1640,7 @@ python-versions = "*"
 version = "2020.6.8"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Python HTTP for Humans."
 name = "requests"
 optional = false
@@ -1681,7 +1681,7 @@ version = "4.6"
 pyasn1 = ">=0.1.3"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "An Amazon S3 Transfer Manager"
 name = "s3transfer"
 optional = false
@@ -1732,7 +1732,7 @@ python-versions = "*"
 version = "2.0.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Database Abstraction Library"
 name = "sqlalchemy"
 optional = false
@@ -1814,7 +1814,7 @@ six = "*"
 test = ["pytest", "mock"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Transaction management for Python"
 name = "transaction"
 optional = false
@@ -1830,7 +1830,7 @@ test = ["mock"]
 testing = ["nose", "coverage", "mock"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Utility library for i18n relied on by various Repoze and Pyramid packages"
 name = "translationstring"
 optional = false
@@ -1854,7 +1854,7 @@ python-versions = "*"
 version = "3.7.4.2"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
 optional = false
@@ -1875,7 +1875,7 @@ python-versions = "*"
 version = "2.0.19.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A library for deferring decorator actions"
 name = "venusian"
 optional = false
@@ -1925,7 +1925,7 @@ python-versions = "*"
 version = "0.2.5"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "WSGI request and response object"
 name = "webob"
 optional = false
@@ -1982,7 +1982,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Zope Deprecation Infrastructure"
 name = "zope.deprecation"
 optional = false
@@ -1997,7 +1997,7 @@ docs = ["sphinx"]
 test = ["zope.testrunner"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Interfaces for Python"
 name = "zope.interface"
 optional = false
@@ -2013,7 +2013,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Minimal Zope/SQLAlchemy transaction integration"
 name = "zope.sqlalchemy"
 optional = false
@@ -2033,7 +2033,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "58520ff388d63ce9dba4c1b5e225222a23225d33b61aed6c225cb1957879e35d"
+content-hash = "69075f0720033af4c9b970982254a27453966080fdece8ef3d716fe1b3613ad4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -2077,8 +2077,8 @@ boto3 = [
     {file = "boto3-1.14.9.tar.gz", hash = "sha256:51243ba0e976343ca0b98bb4a15fc3d588526220f6ba45bfed7ea45472b1e033"},
 ]
 botocore = [
-    {file = "botocore-1.17.9-py2.py3-none-any.whl", hash = "sha256:7dd59bc766d567ca83bc6113aa139d92ba447738ccdfcd40788848553d329a52"},
-    {file = "botocore-1.17.9.tar.gz", hash = "sha256:cd4bb2d96ff2ec6bf4fbcdb2f241d0fb6ba1e7955b4721cf1d81f13db02768b6"},
+    {file = "botocore-1.17.28-py2.py3-none-any.whl", hash = "sha256:e855254817e289bb9a5fa3c143920c21ea8aeb424f1d4eed1e6c32d84dfd277d"},
+    {file = "botocore-1.17.28.tar.gz", hash = "sha256:71d45ae51c4c1a7ae485836016170a817d8d53292d940d04d72e49e473b98127"},
 ]
 cachetools = [
     {file = "cachetools-4.1.1-py3-none-any.whl", hash = "sha256:513d4ff98dd27f85743a8dc0e92f55ddb1b49e060c2d5961512855cda2c01a98"},
