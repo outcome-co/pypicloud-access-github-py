@@ -8,3 +8,9 @@ coverage
 **/*.egg-info
 dist
 .env
+
+
+sample/server.ini
+sample/packages
+sample/storage
+sample/*.sqlite

@@ -14,7 +14,6 @@ documentation = "https://github.com/outcome-co/pypicloud-access-github-py#README
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pypicloud = "^1.1.0"
 cachetools = "^4.1.0"
 toml = "^0.10.1"
 sgqlc = ">=10.1,<12.0"
