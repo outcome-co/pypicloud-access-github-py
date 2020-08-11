@@ -22,7 +22,7 @@ jobs:
         # If we don't have correct commit messages, we 
         # can't get the new version number
         - name: Lint commit messages
-          uses: wagoid/commitlint-github-action@v1
+          uses: wagoid/commitlint-github-action@v2
           with:
             failOnWarnings: true
 
