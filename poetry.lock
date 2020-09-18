@@ -191,7 +191,6 @@ version = "7.1.2"
 [[package]]
 category = "dev"
 description = "Cross-platform colored terminal text."
-marker = "platform_system == \"Windows\" or sys_platform == \"win32\""
 name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
@@ -204,6 +203,17 @@ name = "colored"
 optional = false
 python-versions = "*"
 version = "1.4.2"
+
+[[package]]
+category = "dev"
+description = "Python parser for the CommonMark Markdown spec"
+name = "commonmark"
+optional = false
+python-versions = "*"
+version = "0.9.1"
+
+[package.extras]
+test = ["flake8 (3.7.8)", "hypothesis (3.55.3)"]
 
 [[package]]
 category = "dev"
@@ -952,7 +962,7 @@ description = "A package containing common dev dependencies for python projects.
 name = "outcome-devkit"
 optional = false
 python-versions = ">=3.8,<4.0"
-version = "3.0.1"
+version = "3.0.2"
 
 [package.dependencies]
 black = ">=19.10b0,<20.0"
@@ -972,10 +982,10 @@ ipython = ">=7.13.0,<8.0.0"
 isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
 mypy = ">=0.780,<0.783"
-outcome-utils = ">=3.1.0,<4.0.0"
+outcome-utils = ">=4.0.0,<5.0.0"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
-pytest = ">=5.3.5,<6.0.0"
+pytest = ">=5.3.5,<7.0.0"
 pytest-asyncio = ">=0.12,<0.15"
 wemake-python-styleguide = ">=0.14.0,<0.15.0"
 
@@ -985,11 +995,12 @@ description = "A collection of python utils."
 name = "outcome-utils"
 optional = false
 python-versions = ">=3.8,<4.0"
-version = "3.2.0"
+version = "4.0.0"
 
 [package.dependencies]
 colored = ">=1.4.2,<2.0.0"
 jinja2 = ">=2.11.2,<3.0.0"
+rich = ">=6.2.0,<7.0.0"
 toml = ">=0.10.1,<0.11.0"
 
 [[package]]
@@ -1690,6 +1701,23 @@ docutils = ">=0.11,<1.0"
 
 [[package]]
 category = "dev"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+name = "rich"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "6.2.0"
+
+[package.dependencies]
+colorama = ">=0.4.0,<0.5.0"
+commonmark = ">=0.9.0,<0.10.0"
+pygments = ">=2.6.0,<3.0.0"
+typing-extensions = ">=3.7.4,<4.0.0"
+
+[package.extras]
+jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
+
+[[package]]
+category = "dev"
 description = "Pure-Python RSA implementation"
 marker = "python_version >= \"3.5\""
 name = "rsa"
@@ -2056,7 +2084,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "93a5f9d3a6aec28ae3e9141fe2c01834c3dcaf451258a7558a3e1b5aa5cffcbd"
+content-hash = "b097ce32feeadc560895169fcdd52ecad28d26ee4d2cb13b66aaef513bd90c7a"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -2160,6 +2188,10 @@ colorama = [
 ]
 colored = [
     {file = "colored-1.4.2.tar.gz", hash = "sha256:056fac09d9e39b34296e7618897ed1b8c274f98423770c2980d829fd670955ed"},
+]
+commonmark = [
+    {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
+    {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
 coverage = [
     {file = "coverage-5.2.1-cp27-cp27m-macosx_10_13_intel.whl", hash = "sha256:40f70f81be4d34f8d491e55936904db5c527b0711b2a46513641a5729783c2e4"},
@@ -2511,12 +2543,12 @@ nodeenv = [
     {file = "nodeenv-1.4.0.tar.gz", hash = "sha256:26941644654d8dd5378720e38f62a3bac5f9240811fb3b8913d2663a17baa91c"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-3.0.1.tar.gz", hash = "sha256:f93ebac27d74f2eb7145430844282bae32d8a24494403740972f3d620467068a"},
-    {file = "outcome_devkit-3.0.1-py3-none-any.whl", hash = "sha256:ba687258b2e08285a55cb5adf6ae9d6a6f2ee56b617efa9e63638697478d2d98"},
+    {file = "outcome-devkit-3.0.2.tar.gz", hash = "sha256:f968e8fd1cc86a016da399821b3dcd97f318a1f6c2038c10e63287dbf320c6a8"},
+    {file = "outcome_devkit-3.0.2-py3-none-any.whl", hash = "sha256:756f242aa9843eb73edf95f1b516c05cede011e1ecadb515ad193ba0e1ed8c99"},
 ]
 outcome-utils = [
-    {file = "outcome-utils-3.2.0.tar.gz", hash = "sha256:7f62e954cb9d7c8d7ec203144bf396923bec91d4d0c492130060b949f73e0c4a"},
-    {file = "outcome_utils-3.2.0-py3-none-any.whl", hash = "sha256:77d3244b70d74795945ea874b94f4d10775391a99d84a3db61b1853c82021118"},
+    {file = "outcome-utils-4.0.0.tar.gz", hash = "sha256:c828697e474da63ee40631ed89163b32a1a59c46a79b2292fd04b2c44f616800"},
+    {file = "outcome_utils-4.0.0-py3-none-any.whl", hash = "sha256:d9a915ad91dac653217cd2315185206e218424c8e9f355ecdc5d64a36f70fa90"},
 ]
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
@@ -2830,6 +2862,10 @@ requests = [
 ]
 restructuredtext-lint = [
     {file = "restructuredtext_lint-1.3.1.tar.gz", hash = "sha256:470e53b64817211a42805c3a104d2216f6f5834b22fe7adb637d1de4d6501fb8"},
+]
+rich = [
+    {file = "rich-6.2.0-py3-none-any.whl", hash = "sha256:fa55d5d6ba9a0df1f1c95518891b57b13f1d45548a9a198a87b093fceee513ec"},
+    {file = "rich-6.2.0.tar.gz", hash = "sha256:f99c877277906e1ff83b135c564920590ba31188f424dcdb5d1cae652a519b4b"},
 ]
 rsa = [
     {file = "rsa-4.6-py3-none-any.whl", hash = "sha256:6166864e23d6b5195a5cfed6cd9fed0fe774e226d8f854fcb23b7bbef0350233"},
