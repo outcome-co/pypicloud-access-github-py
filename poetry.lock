@@ -1393,7 +1393,7 @@ description = "Private PyPI backed by S3"
 name = "pypicloud"
 optional = false
 python-versions = ">=3.5"
-version = "1.1.4"
+version = "1.1.5"
 
 [package.dependencies]
 boto3 = ">=1.7.0"
@@ -1422,7 +1422,7 @@ doc = ["numpydoc", "sphinx", "sphinx-rtd-theme"]
 dynamo = ["flywheel (>=0.2.0)"]
 gcs = ["google-cloud-storage (>=1.10.0)"]
 ldap = ["python-ldap"]
-lint = ["black", "isort (>=4.2.5,<5)", "mypy", "pylint (2.3.1)", "sqlalchemy-stubs"]
+lint = ["black", "docutils", "isort (>=4.2.5,<5)", "mypy", "pylint (2.3.1)", "sqlalchemy-stubs"]
 redis = ["redis"]
 server = ["waitress"]
 test = ["azure-storage-blob (>=12.3.1)", "flywheel (>=0.2.0)", "google-cloud-storage (>=1.10.0)", "mock", "mockldap", "moto", "mysqlclient", "nose", "psycopg2-binary", "python-ldap", "redis", "requests", "vcrpy", "webtest"]
@@ -2084,7 +2084,7 @@ test = ["zope.testing"]
 memcache = ["python-memcached"]
 
 [metadata]
-content-hash = "b097ce32feeadc560895169fcdd52ecad28d26ee4d2cb13b66aaef513bd90c7a"
+content-hash = "03f3dc203d98d0f02a679361401d33f3e39dff066f127281b051f05055072cd8"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -2751,8 +2751,8 @@ pyparsing = [
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pypicloud = [
-    {file = "pypicloud-1.1.4-py2.py3-none-any.whl", hash = "sha256:d49cd8814d83c804b9fb269825daa29504428334a683ceecfa198946f4486d29"},
-    {file = "pypicloud-1.1.4.tar.gz", hash = "sha256:2cf4361b819569a421b7399485d4c63cccb18f4e72f571fde01fbc67662ff350"},
+    {file = "pypicloud-1.1.5-py2.py3-none-any.whl", hash = "sha256:91675788071699fa30dae11d3cbd42734a50c33ce02365d7824b84ec0fa5d258"},
+    {file = "pypicloud-1.1.5.tar.gz", hash = "sha256:a362622d90fdb588ab7c111555c2d3b5afe826dd5522b82584e0621199862ff1"},
 ]
 pyramid = [
     {file = "pyramid-1.10.4-py2.py3-none-any.whl", hash = "sha256:51bf64647345237c00d2fe558935e0e4938c156e29f17e203457fd8e1d757dc7"},
