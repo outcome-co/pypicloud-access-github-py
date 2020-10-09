@@ -21,7 +21,7 @@ import re
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from outcome.pypicloud_access_github import cache
+from outcome.utils import cache
 from outcome.pypicloud_access_github.graphql import schema
 from outcome.pypicloud_access_github.graphql.client import Client, Operation
 from pypicloud.access.base import ONE_WEEK, IAccessBackend
