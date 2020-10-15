@@ -24,7 +24,7 @@ outcome-utils = "^4.7.0"
 memcache = ["python-memcached"]
 
 [tool.poetry.dev-dependencies]
-outcome-devkit = "3.0.13"
+outcome-devkit = "3.0.14"
 pytest-dotenv = "^0.5.1"
 PyGithub = "^1.53"
 pydantic = "^1.6"
