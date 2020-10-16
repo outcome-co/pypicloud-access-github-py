@@ -858,7 +858,7 @@ python-versions = "*"
 
 [[package]]
 name = "outcome-devkit"
-version = "3.0.14"
+version = "3.1.0"
 description = "A package containing common dev dependencies for python projects."
 category = "dev"
 optional = false
@@ -882,7 +882,7 @@ ipython = ">=7.13.0,<8.0.0"
 isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
 mypy = ">=0.780,<0.791"
-outcome-utils = ">=4.0.0,<5.0.0"
+outcome-utils = ">=4.11.0,<5.0.0"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
 pytest = ">=5.3.5,<7.0.0"
@@ -1931,7 +1931,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "5ae559f695849a57d08024fc4f21d9cc6c19ddeb58faeba01ceb7b313f9ed796"
+content-hash = "6123f76c6bb0491557b592c012222654d02d05c61977405ce4c5a2186f2ef962"
 
 [metadata.files]
 appdirs = [
@@ -2352,8 +2352,8 @@ nodeenv = [
     {file = "nodeenv-1.4.0.tar.gz", hash = "sha256:26941644654d8dd5378720e38f62a3bac5f9240811fb3b8913d2663a17baa91c"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-3.0.14.tar.gz", hash = "sha256:987e6be578f85d754eaf29f8bd23e247ef79656c96a86b13aadcef9f2e36d8e6"},
-    {file = "outcome_devkit-3.0.14-py3-none-any.whl", hash = "sha256:fdb46f8b91e168db9fd3909f8714475bac77cb422fb4cd2461d1ec818fc3ff3f"},
+    {file = "outcome-devkit-3.1.0.tar.gz", hash = "sha256:31deb6a49791076daf6cad8cf502ba8c76798bb15a35668d0ed65d4fac4d62d4"},
+    {file = "outcome_devkit-3.1.0-py3-none-any.whl", hash = "sha256:aa5938840cab16f05118480ee1204d235f82a3a06a57b54745745060b4e9c3d1"},
 ]
 outcome-utils = [
     {file = "outcome-utils-4.12.1.tar.gz", hash = "sha256:4a57b0804daa4172b1a6749db61f397cd80b5b6bf6d01eb89d858d495ac900fd"},
