@@ -25,7 +25,7 @@ jobs:
           uses: actions/checkout@v2
 
         - name: "Get python version"
-          uses: outcome-co/action-read-toml@master
+          uses: outcome-co/action-read-toml@v1.9.3
           id: python_version
           with:
             path: pyproject.toml

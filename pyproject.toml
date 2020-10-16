@@ -13,7 +13,7 @@ repository = "https://github.com/outcome-co/pypicloud-access-github-py"
 documentation = "https://github.com/outcome-co/pypicloud-access-github-py#README"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "~3.8"
 toml = "^0.10.1"
 sgqlc = ">=10.1,<12.0"
 pydash = "^4.8.0"
@@ -91,6 +91,6 @@ bump_message = "chore(version): $current_version → $new_version"
 version_files = ["pyproject.toml:^version", "README.md:version-badge"]
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry==1.0.10"]
 build-backend = "poetry.masonry.api"
 
