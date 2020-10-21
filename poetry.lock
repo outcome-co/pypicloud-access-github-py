@@ -858,7 +858,7 @@ python-versions = "*"
 
 [[package]]
 name = "outcome-devkit"
-version = "3.1.0"
+version = "3.2.0"
 description = "A package containing common dev dependencies for python projects."
 category = "dev"
 optional = false
@@ -883,6 +883,7 @@ isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
 mypy = ">=0.780,<0.791"
 outcome-utils = ">=4.11.0,<5.0.0"
+pact-python = "1.2.7"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
 pytest = ">=5.3.5,<7.0.0"
@@ -920,6 +921,20 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.dependencies]
 pyparsing = ">=2.0.2"
 six = "*"
+
+[[package]]
+name = "pact-python"
+version = "1.2.7"
+description = "Tools for creating and verifying consumer driven contracts using the Pact framework."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+click = ">=2.0.0"
+psutil = ">=2.0.0"
+requests = ">=2.5.0"
+six = ">=1.9.0"
 
 [[package]]
 name = "parso"
@@ -1120,6 +1135,17 @@ python-versions = ">=3.6.1"
 
 [package.dependencies]
 wcwidth = "*"
+
+[[package]]
+name = "psutil"
+version = "5.7.2"
+description = "Cross-platform lib for process and system monitoring in Python."
+category = "dev"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[package.extras]
+test = ["ipaddress", "mock", "unittest2", "enum34", "pywin32", "wmi"]
 
 [[package]]
 name = "ptyprocess"
@@ -1931,7 +1957,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "6123f76c6bb0491557b592c012222654d02d05c61977405ce4c5a2186f2ef962"
+content-hash = "cbba96cb4d9dab501e9ae46736927ae07c8b91d1c2f378606e5ab96b6c4122fc"
 
 [metadata.files]
 appdirs = [
@@ -2352,8 +2378,8 @@ nodeenv = [
     {file = "nodeenv-1.4.0.tar.gz", hash = "sha256:26941644654d8dd5378720e38f62a3bac5f9240811fb3b8913d2663a17baa91c"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-3.1.0.tar.gz", hash = "sha256:31deb6a49791076daf6cad8cf502ba8c76798bb15a35668d0ed65d4fac4d62d4"},
-    {file = "outcome_devkit-3.1.0-py3-none-any.whl", hash = "sha256:aa5938840cab16f05118480ee1204d235f82a3a06a57b54745745060b4e9c3d1"},
+    {file = "outcome-devkit-3.2.0.tar.gz", hash = "sha256:407a068db48b262dd64636151df7c79bf5eab32aa391a1cbd606bb63ee4a9c69"},
+    {file = "outcome_devkit-3.2.0-py3-none-any.whl", hash = "sha256:a73525a62a99c1bf614f812286b0d78b4aa730774f33aa163ad4e7ab445ef149"},
 ]
 outcome-utils = [
     {file = "outcome-utils-4.12.1.tar.gz", hash = "sha256:4a57b0804daa4172b1a6749db61f397cd80b5b6bf6d01eb89d858d495ac900fd"},
@@ -2362,6 +2388,9 @@ outcome-utils = [
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
     {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
+]
+pact-python = [
+    {file = "pact-python-1.2.7.tar.gz", hash = "sha256:2bdfed444ae965013505c661b3cb5fd342b1e9530566943b0a50a6d3f5dafca4"},
 ]
 parso = [
     {file = "parso-0.7.1-py2.py3-none-any.whl", hash = "sha256:97218d9159b2520ff45eb78028ba8b50d2bc61dcc062a9682666f2dc4bd331ea"},
@@ -2425,6 +2454,19 @@ pre-commit = [
 prompt-toolkit = [
     {file = "prompt_toolkit-3.0.6-py3-none-any.whl", hash = "sha256:683397077a64cd1f750b71c05afcfc6612a7300cb6932666531e5a54f38ea564"},
     {file = "prompt_toolkit-3.0.6.tar.gz", hash = "sha256:7630ab85a23302839a0f26b31cc24f518e6155dea1ed395ea61b42c45941b6a6"},
+]
+psutil = [
+    {file = "psutil-5.7.2-cp27-none-win32.whl", hash = "sha256:f2018461733b23f308c298653c8903d32aaad7873d25e1d228765e91ae42c3f2"},
+    {file = "psutil-5.7.2-cp27-none-win_amd64.whl", hash = "sha256:66c18ca7680a31bf16ee22b1d21b6397869dda8059dbdb57d9f27efa6615f195"},
+    {file = "psutil-5.7.2-cp35-cp35m-win32.whl", hash = "sha256:5e9d0f26d4194479a13d5f4b3798260c20cecf9ac9a461e718eb59ea520a360c"},
+    {file = "psutil-5.7.2-cp35-cp35m-win_amd64.whl", hash = "sha256:4080869ed93cce662905b029a1770fe89c98787e543fa7347f075ade761b19d6"},
+    {file = "psutil-5.7.2-cp36-cp36m-win32.whl", hash = "sha256:d8a82162f23c53b8525cf5f14a355f5d1eea86fa8edde27287dd3a98399e4fdf"},
+    {file = "psutil-5.7.2-cp36-cp36m-win_amd64.whl", hash = "sha256:0ee3c36428f160d2d8fce3c583a0353e848abb7de9732c50cf3356dd49ad63f8"},
+    {file = "psutil-5.7.2-cp37-cp37m-win32.whl", hash = "sha256:ff1977ba1a5f71f89166d5145c3da1cea89a0fdb044075a12c720ee9123ec818"},
+    {file = "psutil-5.7.2-cp37-cp37m-win_amd64.whl", hash = "sha256:a5b120bb3c0c71dfe27551f9da2f3209a8257a178ed6c628a819037a8df487f1"},
+    {file = "psutil-5.7.2-cp38-cp38-win32.whl", hash = "sha256:10512b46c95b02842c225f58fa00385c08fa00c68bac7da2d9a58ebe2c517498"},
+    {file = "psutil-5.7.2-cp38-cp38-win_amd64.whl", hash = "sha256:68d36986ded5dac7c2dcd42f2682af1db80d4bce3faa126a6145c1637e1b559f"},
+    {file = "psutil-5.7.2.tar.gz", hash = "sha256:90990af1c3c67195c44c9a889184f84f5b2320dce3ee3acbd054e3ba0b4a7beb"},
 ]
 ptyprocess = [
     {file = "ptyprocess-0.6.0-py2.py3-none-any.whl", hash = "sha256:d7cc528d76e76342423ca640335bd3633420dc1366f258cb31d05e865ef5ca1f"},
