@@ -858,7 +858,7 @@ python-versions = "*"
 
 [[package]]
 name = "outcome-devkit"
-version = "3.2.0"
+version = "3.2.1"
 description = "A package containing common dev dependencies for python projects."
 category = "dev"
 optional = false
@@ -883,7 +883,7 @@ isort = ">=4.3.21,<5.0.0"
 mock = ">=4.0.2,<5.0.0"
 mypy = ">=0.780,<0.791"
 outcome-utils = ">=4.11.0,<5.0.0"
-pact-python = "1.2.7"
+pact-python = "1.2.9"
 pdbpp = ">=0.10.2,<0.11.0"
 pre-commit = ">=2.2.0,<3.0.0"
 pytest = ">=5.3.5,<7.0.0"
@@ -924,7 +924,7 @@ six = "*"
 
 [[package]]
 name = "pact-python"
-version = "1.2.7"
+version = "1.2.9"
 description = "Tools for creating and verifying consumer driven contracts using the Pact framework."
 category = "dev"
 optional = false
@@ -1957,7 +1957,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "cbba96cb4d9dab501e9ae46736927ae07c8b91d1c2f378606e5ab96b6c4122fc"
+content-hash = "179f2b5457b9c9e025ae90174a89b0e64c81b9bc3dfc90fd286b63ac01e6f4cd"
 
 [metadata.files]
 appdirs = [
@@ -2378,8 +2378,8 @@ nodeenv = [
     {file = "nodeenv-1.4.0.tar.gz", hash = "sha256:26941644654d8dd5378720e38f62a3bac5f9240811fb3b8913d2663a17baa91c"},
 ]
 outcome-devkit = [
-    {file = "outcome-devkit-3.2.0.tar.gz", hash = "sha256:407a068db48b262dd64636151df7c79bf5eab32aa391a1cbd606bb63ee4a9c69"},
-    {file = "outcome_devkit-3.2.0-py3-none-any.whl", hash = "sha256:a73525a62a99c1bf614f812286b0d78b4aa730774f33aa163ad4e7ab445ef149"},
+    {file = "outcome-devkit-3.2.1.tar.gz", hash = "sha256:f335eccc1c04642c456f28ebe2af28d8036b3a6a86206e924a80efeedaa54150"},
+    {file = "outcome_devkit-3.2.1-py3-none-any.whl", hash = "sha256:f539f0717b1d4b3f775ac129cb647be57e797343b4f92676d247583ad44c4f77"},
 ]
 outcome-utils = [
     {file = "outcome-utils-4.12.1.tar.gz", hash = "sha256:4a57b0804daa4172b1a6749db61f397cd80b5b6bf6d01eb89d858d495ac900fd"},
@@ -2390,7 +2390,7 @@ packaging = [
     {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
 ]
 pact-python = [
-    {file = "pact-python-1.2.7.tar.gz", hash = "sha256:2bdfed444ae965013505c661b3cb5fd342b1e9530566943b0a50a6d3f5dafca4"},
+    {file = "pact-python-1.2.9.tar.gz", hash = "sha256:3d6bb572eeda788b27b9252c32ff4dac2b67c9554fc88ed325bbc5ca9fdbe434"},
 ]
 parso = [
     {file = "parso-0.7.1-py2.py3-none-any.whl", hash = "sha256:97218d9159b2520ff45eb78028ba8b50d2bc61dcc062a9682666f2dc4bd331ea"},
