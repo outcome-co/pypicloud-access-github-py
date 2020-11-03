@@ -58,7 +58,7 @@ jobs:
             key: tool.poetry.dependencies.python
 
         - name: Check TODOs
-          uses: outcome-co/action-check-todos@v1.7.3
+          uses: outcome-co/action-check-todos@v1.7.4
           with:
             pattern: "**/*"
 
