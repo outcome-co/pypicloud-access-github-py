@@ -1425,7 +1425,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "pypicloud"
-version = "1.1.5"
+version = "1.1.6"
 description = "Private PyPI backed by S3"
 category = "dev"
 optional = false
@@ -1449,16 +1449,16 @@ transaction = "*"
 "zope.sqlalchemy" = "*"
 
 [package.extras]
-all_plugins = ["azure-storage-blob (>=12.3.1)", "flywheel (>=0.2.0)", "google-cloud-storage (>=1.10.0)", "python-ldap", "redis"]
+all_plugins = ["python-ldap", "flywheel (>=0.2.0)", "redis", "google-cloud-storage (>=1.10.0)", "azure-storage-blob (>=12.3.1)"]
 azure-blob = ["azure-storage-blob (>=12.3.1)"]
 doc = ["numpydoc", "sphinx", "sphinx-rtd-theme"]
 dynamo = ["flywheel (>=0.2.0)"]
 gcs = ["google-cloud-storage (>=1.10.0)"]
 ldap = ["python-ldap"]
-lint = ["black", "docutils", "isort (>=4.2.5,<5)", "mypy", "pylint (==2.3.1)", "sqlalchemy-stubs"]
+lint = ["docutils", "black", "pylint (==2.3.1)", "mypy", "sqlalchemy-stubs", "isort (>=4.2.5,<5)"]
 redis = ["redis"]
 server = ["waitress"]
-test = ["azure-storage-blob (>=12.3.1)", "flywheel (>=0.2.0)", "google-cloud-storage (>=1.10.0)", "mock", "mockldap", "moto", "mysqlclient", "nose", "psycopg2-binary", "python-ldap", "redis", "requests", "vcrpy", "webtest"]
+test = ["python-ldap", "flywheel (>=0.2.0)", "redis", "google-cloud-storage (>=1.10.0)", "azure-storage-blob (>=12.3.1)", "mock", "mockldap", "moto", "mysqlclient", "nose", "psycopg2-binary", "requests", "webtest", "vcrpy"]
 
 [[package]]
 name = "pyramid"
@@ -2117,7 +2117,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "62bb47a8343cee0434dd70fd28e68b83ae653a799162ac4fee4120e7f45a8ed8"
+content-hash = "fea6a89a2a777dfdd9db42d950a7885bf1e41b032df6a73bceb4b80ca82f2e68"
 
 [metadata.files]
 appdirs = [
@@ -2811,8 +2811,8 @@ pyparsing = [
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pypicloud = [
-    {file = "pypicloud-1.1.5-py2.py3-none-any.whl", hash = "sha256:91675788071699fa30dae11d3cbd42734a50c33ce02365d7824b84ec0fa5d258"},
-    {file = "pypicloud-1.1.5.tar.gz", hash = "sha256:a362622d90fdb588ab7c111555c2d3b5afe826dd5522b82584e0621199862ff1"},
+    {file = "pypicloud-1.1.6-py2.py3-none-any.whl", hash = "sha256:49acadf5d6dc3318c3dff8ea245ce67f32bc34ff5a4d25c069253e2a583492bd"},
+    {file = "pypicloud-1.1.6.tar.gz", hash = "sha256:1c049445b4bb1a659c054e50f4970b961d43d753d308d2ade88cb2f87d3e461e"},
 ]
 pyramid = [
     {file = "pyramid-1.10.4-py2.py3-none-any.whl", hash = "sha256:51bf64647345237c00d2fe558935e0e4938c156e29f17e203457fd8e1d757dc7"},
