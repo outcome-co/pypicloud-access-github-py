@@ -30,7 +30,7 @@ PyGithub = "^1.53"
 pydantic = "^1.7"
 click = "^7.1.2"
 python-dotenv = "^0.15.0"
-requests = "^2.24.0"
+requests = "^2.25.0"
 pynacl = "^1.4.0"
 pypicloud = {extras = ["gcs"], version = "^1.1.6"}
 uwsgi = "^2.0.19"
