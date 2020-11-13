@@ -33,7 +33,7 @@ jobs:
 
         - name: Bump version
           id: bump_version
-          uses: 'outcome-co/action-update-version@v0.8.5'
+          uses: 'outcome-co/action-update-version@v0.9.0'
 
         - name: Push new version
           if: ${{ steps.bump_version.outputs.updated == 'true' }}
