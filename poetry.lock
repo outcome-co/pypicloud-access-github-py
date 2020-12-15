@@ -1336,14 +1336,14 @@ typing_extensions = ["typing-extensions (>=3.7.2)"]
 
 [[package]]
 name = "pydash"
-version = "4.9.0"
+version = "4.9.1"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.extras]
-dev = ["coverage", "flake8", "mock", "pylint", "pytest", "pytest-cov", "sphinx", "sphinx-rtd-theme", "tox", "twine", "wheel"]
+dev = ["coverage", "docformatter", "flake8", "invoke", "mock", "pylint", "pytest", "pytest-cov", "pytest-flake8", "pytest-pylint", "sphinx", "sphinx-rtd-theme", "tox", "twine", "wheel", "black", "flake8-black", "flake8-bugbear", "flake8-isort", "isort"]
 
 [[package]]
 name = "pydocstyle"
@@ -2773,8 +2773,8 @@ pydantic = [
     {file = "pydantic-1.7.3.tar.gz", hash = "sha256:213125b7e9e64713d16d988d10997dabc6a1f73f3991e1ff8e35ebb1409c7dc9"},
 ]
 pydash = [
-    {file = "pydash-4.9.0-py2.py3-none-any.whl", hash = "sha256:a743212a586f92980ee093fdec4a984cb97d38fe6d5dadd3c4eb1de57bc5fb4a"},
-    {file = "pydash-4.9.0.tar.gz", hash = "sha256:44f7217669511901bf234628231a8d8fccd89a53c23b54c35759ee0838a67ba7"},
+    {file = "pydash-4.9.1-py2.py3-none-any.whl", hash = "sha256:f328ce27a87a3d3cea4566fa4c9d13748a8af45d9c738fe49a80490bc46fd271"},
+    {file = "pydash-4.9.1.tar.gz", hash = "sha256:edd2e4cc964372337b0b881e5a18fc4d55b232c66e1200e26bc8dbb92bcf6bba"},
 ]
 pydocstyle = [
     {file = "pydocstyle-5.0.2-py3-none-any.whl", hash = "sha256:da7831660b7355307b32778c4a0dbfb137d89254ef31a2b2978f50fc0b4d7586"},
