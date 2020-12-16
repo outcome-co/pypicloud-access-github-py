@@ -1860,7 +1860,7 @@ pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 
 [[package]]
 name = "tenacity"
-version = "6.2.0"
+version = "6.3.0"
 description = "Retry code until it succeeds"
 category = "dev"
 optional = false
@@ -2127,7 +2127,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "f49806ab6626a83ec4e26313b45d26264fa93c8e8604c139ff5f55ebca5e1012"
+content-hash = "32093ca3eac3781b5b12b338bcbcfd0b4eca103d46f3d2bbf7aab53c1e381e59"
 
 [metadata.files]
 appdirs = [
@@ -3007,8 +3007,8 @@ stevedore = [
     {file = "stevedore-3.2.0.tar.gz", hash = "sha256:38791aa5bed922b0a844513c5f9ed37774b68edc609e5ab8ab8d8fe0ce4315e5"},
 ]
 tenacity = [
-    {file = "tenacity-6.2.0-py2.py3-none-any.whl", hash = "sha256:5a5d3dcd46381abe8b4f82b5736b8726fd3160c6c7161f53f8af7f1eb9b82173"},
-    {file = "tenacity-6.2.0.tar.gz", hash = "sha256:29ae90e7faf488a8628432154bb34ace1cca58244c6ea399fd33f066ac71339a"},
+    {file = "tenacity-6.3.0-py2.py3-none-any.whl", hash = "sha256:a0320f92bd2509854b6a12a8ebc4bc70388e5641f70ddde941a0ea758503377e"},
+    {file = "tenacity-6.3.0.tar.gz", hash = "sha256:8f2fc6b7605c4cc0331afedaff6a6867454c65aa2ba29d317cbf92bfc6f7bfac"},
 ]
 testfixtures = [
     {file = "testfixtures-6.14.1-py2.py3-none-any.whl", hash = "sha256:30566e24a1b34e4d3f8c13abf62557d01eeb4480bcb8f1745467bfb0d415a7d9"},
