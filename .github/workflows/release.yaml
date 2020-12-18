@@ -32,7 +32,7 @@ jobs:
             key: tool.poetry.dependencies.python
 
         - name: "Set up python ${{ steps.python_version.outputs.tool_poetry_dependencies_python }}"
-          uses: actions/setup-python@v2.1.4
+          uses: actions/setup-python@v2.2.0
           with:
             python-version: ${{ steps.python_version.outputs.tool_poetry_dependencies_python }}
 
