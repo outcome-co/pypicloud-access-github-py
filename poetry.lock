@@ -1789,7 +1789,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "sgqlc"
-version = "11.0"
+version = "12.1"
 description = "Simple GraphQL Client"
 category = "main"
 optional = false
@@ -2127,7 +2127,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "825fda5ad13ef9a2bb59d523e4618201b895aef02359ce9d9e40d944de81315a"
+content-hash = "993938cbf6cead3d336eab2e73c3c851e32cf1a6563d008d87919c254f65e1e7"
 
 [metadata.files]
 appdirs = [
@@ -2956,9 +2956,9 @@ semver = [
     {file = "semver-2.10.2.tar.gz", hash = "sha256:c0a4a9d1e45557297a722ee9bac3de2ec2ea79016b6ffcaca609b0bc62cf4276"},
 ]
 sgqlc = [
-    {file = "sgqlc-11.0-py3-none-any.whl", hash = "sha256:0670a53229c4d7884760c1f351a4134aa0317499682079a41743e4092780bcf2"},
-    {file = "sgqlc-11.0-py3.7.egg", hash = "sha256:8aae431597e388934cb5431f86a50775f9ecad4cd7eceb0597acc54dfa262015"},
-    {file = "sgqlc-11.0.tar.gz", hash = "sha256:0c093c67aace27af224ef994519a6e52d674b02f03756f380cc750c0af0731de"},
+    {file = "sgqlc-12.1-py3-none-any.whl", hash = "sha256:8e5101da6546c6d5a51e30c8e517190a4a2d237236219b7f021ac617ba0836a2"},
+    {file = "sgqlc-12.1-py3.9.egg", hash = "sha256:bee5e23f46f7f22972a70741386cffeca909729fee095162b561aa70ae3a5104"},
+    {file = "sgqlc-12.1.tar.gz", hash = "sha256:b77335a9f2289f70fe42d2bd1941b525716e3fb6258909df6dbfe812cb89ac42"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
