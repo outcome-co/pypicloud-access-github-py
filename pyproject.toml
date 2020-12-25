@@ -26,7 +26,7 @@ memcache = ["python-memcached"]
 [tool.poetry.dev-dependencies]
 outcome-devkit = "3.2.1"
 pytest-dotenv = "^0.5.1"
-PyGithub = "^1.53"
+PyGithub = "^1.54"
 pydantic = "^1.7"
 click = "^7.1.2"
 python-dotenv = "^0.15.0"
