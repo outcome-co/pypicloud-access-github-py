@@ -1336,7 +1336,7 @@ typing_extensions = ["typing-extensions (>=3.7.2)"]
 
 [[package]]
 name = "pydash"
-version = "4.9.1"
+version = "4.9.2"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "main"
 optional = false
@@ -1374,15 +1374,15 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pygithub"
-version = "1.53"
+version = "1.54.1"
 description = "Use the full Github API v3"
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
 deprecated = "*"
-pyjwt = "*"
+pyjwt = "<2.0"
 requests = ">=2.14.0"
 
 [package.extras]
@@ -2127,7 +2127,7 @@ memcache = ["python-memcached"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "993938cbf6cead3d336eab2e73c3c851e32cf1a6563d008d87919c254f65e1e7"
+content-hash = "d070cc8374f73a37e9617c207d34771e082f3b6bebaf4220a5bf03a89c29d96e"
 
 [metadata.files]
 appdirs = [
@@ -2773,8 +2773,8 @@ pydantic = [
     {file = "pydantic-1.7.3.tar.gz", hash = "sha256:213125b7e9e64713d16d988d10997dabc6a1f73f3991e1ff8e35ebb1409c7dc9"},
 ]
 pydash = [
-    {file = "pydash-4.9.1-py2.py3-none-any.whl", hash = "sha256:f328ce27a87a3d3cea4566fa4c9d13748a8af45d9c738fe49a80490bc46fd271"},
-    {file = "pydash-4.9.1.tar.gz", hash = "sha256:edd2e4cc964372337b0b881e5a18fc4d55b232c66e1200e26bc8dbb92bcf6bba"},
+    {file = "pydash-4.9.2-py2.py3-none-any.whl", hash = "sha256:dab98145502528369bd05034f6fb2b520297d49f942cfd51dc9cdc2cd47ec368"},
+    {file = "pydash-4.9.2.tar.gz", hash = "sha256:11d8f3c92d92a004e042fdb226b10dba28f4e311546b0de89d983e91539d5e55"},
 ]
 pydocstyle = [
     {file = "pydocstyle-5.0.2-py3-none-any.whl", hash = "sha256:da7831660b7355307b32778c4a0dbfb137d89254ef31a2b2978f50fc0b4d7586"},
@@ -2789,8 +2789,8 @@ pyflakes = [
     {file = "pyflakes-2.2.0.tar.gz", hash = "sha256:35b2d75ee967ea93b55750aa9edbbf72813e06a66ba54438df2cfac9e3c27fc8"},
 ]
 pygithub = [
-    {file = "PyGithub-1.53-py3-none-any.whl", hash = "sha256:8ad656bf79958e775ec59f7f5a3dbcbadac12147ae3dc42708b951064096af15"},
-    {file = "PyGithub-1.53.tar.gz", hash = "sha256:776befaddab9d8fddd525d52a6ca1ac228cf62b5b1e271836d766f4925e1452e"},
+    {file = "PyGithub-1.54.1-py3-none-any.whl", hash = "sha256:87afd6a67ea582aa7533afdbf41635725f13d12581faed7e3e04b1579c0c0627"},
+    {file = "PyGithub-1.54.1.tar.gz", hash = "sha256:300bc16e62886ca6537b0830e8f516ea4bc3ef12d308e0c5aff8bdbd099173d4"},
 ]
 pygments = [
     {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
