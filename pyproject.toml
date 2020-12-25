@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "outcome-pypicloud-access-github"
-version = "1.2.6"
+version = "1.2.7"
 description = "A Github-based access backend for pypicloud."
 authors = ["Douglas Willcocks <douglas@outcome.co>"]
 readme = "README.md"
@@ -85,7 +85,7 @@ exclude = '''
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.2.6"
+version = "1.2.7"
 tag_format = "v$version"
 bump_message = "chore(version): $current_version → $new_version"
 version_files = ["pyproject.toml:^version", "README.md:version-badge"]
