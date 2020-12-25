@@ -1336,7 +1336,7 @@ typing_extensions = ["typing-extensions (>=3.7.2)"]
 
 [[package]]
 name = "pydash"
-version = "4.9.1"
+version = "4.9.2"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "main"
 optional = false
@@ -2773,8 +2773,8 @@ pydantic = [
     {file = "pydantic-1.7.3.tar.gz", hash = "sha256:213125b7e9e64713d16d988d10997dabc6a1f73f3991e1ff8e35ebb1409c7dc9"},
 ]
 pydash = [
-    {file = "pydash-4.9.1-py2.py3-none-any.whl", hash = "sha256:f328ce27a87a3d3cea4566fa4c9d13748a8af45d9c738fe49a80490bc46fd271"},
-    {file = "pydash-4.9.1.tar.gz", hash = "sha256:edd2e4cc964372337b0b881e5a18fc4d55b232c66e1200e26bc8dbb92bcf6bba"},
+    {file = "pydash-4.9.2-py2.py3-none-any.whl", hash = "sha256:dab98145502528369bd05034f6fb2b520297d49f942cfd51dc9cdc2cd47ec368"},
+    {file = "pydash-4.9.2.tar.gz", hash = "sha256:11d8f3c92d92a004e042fdb226b10dba28f4e311546b0de89d983e91539d5e55"},
 ]
 pydocstyle = [
     {file = "pydocstyle-5.0.2-py3-none-any.whl", hash = "sha256:da7831660b7355307b32778c4a0dbfb137d89254ef31a2b2978f50fc0b4d7586"},
