@@ -81,8 +81,7 @@ C = TypeVar('C', bound=Callable[..., Any])
 
 # A workaround the incorrect typing on the cache_on_arguments method
 def cacheable(fn: C) -> C:
-    cache_region.cache_on_arguments()(fn)
-    return fn
+    return cast(C, cache_region.cache_on_arguments()(fn))
 
 
 class User(TypedDict):
