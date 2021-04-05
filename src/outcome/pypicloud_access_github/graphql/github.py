@@ -79,8 +79,7 @@ class Github:  # noqa: WPS214 # pragma: only-covered-in-integration-tests
             return page.organization.repositories.page_info
 
         for page in self._get_all(query, GetOrganizationPackageFiles, params, page_extractor):
-            assert page.organization.repositories is not None
-            assert page.organization.repositories.edges is not None
+            assert page.organization.repositories is not None and page.organization.repositories.edges is not None
             for edge in page.organization.repositories.edges:
                 repo = edge.node
                 gitobject = repo.gitobject
@@ -103,8 +102,7 @@ class Github:  # noqa: WPS214 # pragma: only-covered-in-integration-tests
             return page.organization.teams.page_info
 
         for page in self._get_all(query, GetOrganizationTeams, params, page_info_extractor):
-            assert page.organization.teams
-            assert page.organization.teams.edges
+            assert page.organization.teams is not None and page.organization.teams.edges is not None
             for edge in page.organization.teams.edges:
                 team = edge.node
                 members: List[Tuple[User, TeamMemberRole]] = []
@@ -142,8 +140,7 @@ class Github:  # noqa: WPS214 # pragma: only-covered-in-integration-tests
             return page.organization.repositories.page_info
 
         for page in self._get_all(query, GetOrganizationRepositoryPermissions, params, page_info_extractor):
-            assert page.organization.repositories is not None
-            assert page.organization.repositories.edges is not None
+            assert page.organization.repositories is not None and page.organization.repositories.edges is not None
             for edge in page.organization.repositories.edges:
                 repo = edge.node
 
@@ -155,8 +152,7 @@ class Github:  # noqa: WPS214 # pragma: only-covered-in-integration-tests
                 repo_permissions = (repo.name, repo_user_permissions, repo_team_permissions)
                 repository_permissions.append(repo_permissions)
 
-                assert repo.collaborators is not None
-                assert repo.collaborators.edges is not None
+                assert repo.collaborators is not None and repo.collaborators.edges is not None
 
                 for collaborator in repo.collaborators.edges:
                     u_permissions: Sequence[DefaultRepositoryPermissionField] = []
