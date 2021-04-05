@@ -19,6 +19,7 @@ python-memcached = {version = "^1.59", optional = true }
 outcome-utils = "^5.0.3"
 gql = {version = "3.0.0.0a5", extras = ["all"]}
 pydantic = "^1.8.1"
+PyGithub = "^1.54"
 
 [tool.poetry.extras]
 memcache = ["python-memcached"]
@@ -26,7 +27,6 @@ memcache = ["python-memcached"]
 [tool.poetry.dev-dependencies]
 outcome-devkit = "^6.6.2"
 pytest-dotenv = "^0.5.1"
-PyGithub = "^1.54"
 pydantic = "^1.7"
 click = "^7.1.2"
 python-dotenv = "^0.15.0"
