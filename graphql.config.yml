@@ -1,0 +1,2 @@
+schema: "src/outcome/pypicloud_access_github/graphql/schema.json"
+documents: "src/**/*.{graphql}"

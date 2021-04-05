@@ -1,0 +1,14 @@
+{
+    "exclude": [
+        ".cache"
+    ],
+    "useLibraryCodeForTypes": true,
+    "typeCheckingMode": "strict",
+    
+    "reportMissingTypeStubs": "information",
+    "reportImportCycles": "none",
+    "reportUnknownMemberType": "information",
+    "reportUntypedFunctionDecorator": "information",
+
+    "ignore": ["src/outcome/pypicloud_access_github/graphql/schema.py"]
+}

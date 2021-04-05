@@ -1,0 +1,23 @@
+query getOrganizationTeams($login: String!, $first: Int = 20, $after: String = null) {
+    organization(login: $login) {
+        teams(first: $first, after: $after) {
+            edges {
+                node {
+                    name
+                    members(membership: ALL) {
+                        edges {
+                            role
+                            node {
+                                login
+                            }
+                        }
+                    }
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+        }
+    }
+}

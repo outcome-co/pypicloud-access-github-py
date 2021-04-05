@@ -2,7 +2,7 @@ import hashlib
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List, Set, cast
 
 import pytest
 from outcome.pypicloud_access_github import Poetry
@@ -12,7 +12,7 @@ from .github_fixture import github_scenario  # noqa: WPS300
 _UNDEFINED_VALUE = '__UNDEFINED'
 
 
-def read_from_env(var: str, default=_UNDEFINED_VALUE):
+def read_from_env(var: str, default: object = _UNDEFINED_VALUE):
     if var not in os.environ:
         if default != _UNDEFINED_VALUE:
             return default
@@ -64,8 +64,10 @@ def github_nonmember_token():
 def additional_admins():
     admins = read_from_env('PYPICLOUD_ACCESS_GITHUB_TEST_ADDITIONAL_ADMINS', None)
 
+    assert isinstance(admins, str)
+
     if admins is None:
-        return []
+        return cast(List[str], [])
 
     return list(map(lambda a: a.strip(), admins.split(',')))
 
@@ -100,12 +102,12 @@ def settings(github_token: str, github_organization: str):
 
 
 @pytest.fixture
-def github_access(settings):
+def github_access(settings: Dict[str, object]):
     return Poetry(**Poetry.configure(settings))
 
 
 @pytest.fixture
-def invalid_github_access(settings):
+def invalid_github_access(settings: Dict[str, object]):
     bad_settings = {'auth.otc.github.token': 'bad token'}
     settings.update(**bad_settings)
     return Poetry(**Poetry.configure(settings))
@@ -136,7 +138,7 @@ def write_permission():
 
 
 @pytest.fixture(scope='session')
-def read_write_permission(read_permission, write_permission):
+def read_write_permission(read_permission: Set[str], write_permission: Set[str]):
     return read_permission | write_permission
 
 

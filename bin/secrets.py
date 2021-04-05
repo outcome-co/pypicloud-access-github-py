@@ -8,7 +8,7 @@ import json
 import os
 import re
 from base64 import b64encode
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, cast
 
 import click
 import requests
@@ -20,7 +20,7 @@ from pydantic import BaseModel
 load_dotenv(find_dotenv())
 
 
-_github_url_pattern = r'^https://github.com/(?P<owner>[^/]+)/(?P<repo>[^/]+)/?$'
+_github_url_pattern = '^https://github.com/(?P<owner>[^/]+)/(?P<repo>[^/]+)/?$'
 
 
 def parse_url(url: str) -> Tuple[str, str]:
@@ -63,7 +63,7 @@ def clear(ctx: click.Context) -> None:
 
 @main.command()
 @click.pass_context
-def sync(ctx) -> None:
+def sync(ctx: click.Context) -> None:
     """Update the secrets on the repo with the local values.
 
     Args:
@@ -87,7 +87,9 @@ def sync(ctx) -> None:
     client = SecretClient(token=token, organization=ctx.obj['organization'])
 
     for var in env_vars:
-        client.create(ctx.obj['repository'], var, os.environ.get(var))
+        value = os.environ.get(var)
+        assert value
+        client.create(ctx.obj['repository'], var, value)
 
 
 # Github REST Models
@@ -129,7 +131,7 @@ class PublicKey(BaseModel):
         """
         public_key = public.PublicKey(self.key.encode('utf-8'), encoding.Base64Encoder())
         sealed_box = public.SealedBox(public_key)
-        encrypted = sealed_box.encrypt(secret_value.encode('utf-8'))
+        encrypted = cast(bytes, sealed_box.encrypt(secret_value.encode('utf-8')))
         return b64encode(encrypted).decode('utf-8')
 
 
@@ -145,16 +147,16 @@ class Client:
         self.token = token
         self.organization = organization
 
-    def get(self, url, **kwargs):
+    def get(self, url: str, **kwargs: object):
         return self.execute('GET', url, **kwargs)
 
-    def put(self, url, **kwargs):
+    def put(self, url: str, **kwargs: object):
         return self.execute('PUT', url, **kwargs)
 
-    def delete(self, url, **kwargs):
+    def delete(self, url: str, **kwargs: object):
         return self.execute('DELETE', url, **kwargs)
 
-    def execute(self, method, url, **kwargs):
+    def execute(self, method: str, url: str, **kwargs: object):
         auth_header = f'Bearer {self.token}'
 
         response = requests.request(method, url, headers={'Authorization': auth_header}, **kwargs)
@@ -162,7 +164,7 @@ class Client:
 
         return response
 
-    def build_url(self, template, **kwargs):
+    def build_url(self, template: str, **kwargs: object):
         url = template.format(owner=self.organization, **kwargs)
         return '{host}{url}'.format(host=self.github_endpoint, url=url)
 

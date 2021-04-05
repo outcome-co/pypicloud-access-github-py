@@ -1,0 +1,21 @@
+query getOrganizationPackageFiles($login: String!, $expression: String!, $first: Int = 20, $after: String = null) {
+    organization(login: $login) {
+        repositories(first: $first, after: $after) {
+            edges {
+                node {
+                    name
+                    object(expression: $expression) {
+                        __typename
+                        ... on Blob {
+                            text
+                        }
+                    }
+                }
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+        }
+    }
+}

@@ -1,0 +1,185 @@
+name: Continuous Integration
+
+on:
+  # For pull requests
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+  # When we merge into master
+  push:
+    branches:
+      - master
+
+env:
+  # These environment variables are automatically recognized by poetry and pip
+  # They allow us to specifically control where the cache is kept, so we can use 
+  # the actions/cache@v2.1.4 action to store downloaded dependencies between multiple runs
+  POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
+  PIP_CACHE_DIR: ${{ github.workspace }}/.cache/pip
+  GITHUB_TOKEN: ${{ secrets.OTTO_TOKEN }}
+  POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_REGISTRY_TOKEN }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_MEMBER_USERNAME: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_MEMBER_USERNAME }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_MEMBER_TOKEN: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_MEMBER_TOKEN }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_NONMEMBER_USERNAME: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_NONMEMBER_USERNAME }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_NONMEMBER_TOKEN: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_NONMEMBER_TOKEN }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_ADMIN_USERNAME: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_ADMIN_USERNAME }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_ADMIN_TOKEN: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_ADMIN_TOKEN }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_ORGANIZATION: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_ORGANIZATION }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_TOKEN: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_TOKEN }}
+  PYPICLOUD_ACCESS_GITHUB_TEST_ADDITIONAL_ADMINS: ${{ secrets.PYPICLOUD_ACCESS_GITHUB_TEST_ADDITIONAL_ADMINS }}
+
+
+jobs:
+    commit_lint:
+      name: Lint commit messages
+      runs-on: ubuntu-latest
+
+      # This is triggered when we're not pushing a chore to master - written with the more
+      # complicated syntax (OR of NOT) instead of (NOT of AND) for syntax limitations
+      if: (!startsWith(github.event.head_commit.message, 'chore') || github.event_name != 'push')
+
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2.3.4
+          with:
+            ref: ${{ github.sha }}
+            fetch-depth: 0
+
+        - name: Lint commit messages
+          uses: wagoid/commitlint-github-action@v2
+          with:
+            failOnWarnings: true
+
+        - uses: amannn/action-semantic-pull-request@v3.1.0
+          if: github.event_name == 'pull_request'
+
+    test:
+      name: Run checks and tests
+      runs-on: ubuntu-latest
+      needs: [commit_lint]
+
+      strategy:
+        fail-fast: true
+        matrix:
+          python: ['3.8', "3.9"]
+
+      # This is triggered when we're not pushing a chore to master - written with the more
+      # complicated syntax (OR of NOT) instead of (NOT of AND) for syntax limitations
+      if: (!startsWith(github.event.head_commit.message, 'chore') || github.event_name != 'push')
+
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2.3.4
+          with:
+            ref: ${{ github.sha }}
+            token: ${{ secrets.OTTO_TOKEN }}
+
+        - name: Set up Node
+          uses: actions/setup-node@v1
+          with:
+            node-version: '14.x'
+
+        - name: Set up python ${{ matrix.python }}
+          uses: actions/setup-python@v2.2.1
+          with:
+            python-version: ${{ matrix.python }}
+
+        - name: Configure pip cache
+          uses: actions/cache@v2.1.4
+          with:
+            path: ${{ env.PIP_CACHE_DIR }}
+            # Pip is only used to install poetry, and the poetry version 
+            # is stored in pyproject.toml
+            key: pip-${{ matrix.python }}-${{ hashFiles('**/pyproject.toml') }}
+            restore-keys: |
+                pip-${{ matrix.python }}
+                pip
+
+        - name: Configure poetry cache
+          uses: actions/cache@v2.1.4
+          with:
+            path: ${{ env.POETRY_CACHE_DIR }}
+            # All of the dependencies are stored in pyproject.toml
+            key: poetry-${{ matrix.python }}-${{ hashFiles('**/poetry.lock') }}
+            restore-keys: |
+                poetry-${{ matrix.python }}
+                poetry
+
+        - name: Setup environment
+          run: ./bootstrap.sh
+
+        - name: Run checks
+          run: inv check.all
+          env:
+            PYTHONPATH: src
+
+        - name: Run tests
+          run: inv test.all
+          env:
+            PYTHONPATH: src
+        
+    release:
+      name: Build and release
+      runs-on: ubuntu-latest
+      needs: [test]
+
+      if: github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore')
+
+        # From here on, all checks and tests have passed, and we're heading for a release
+        # if we're merging into master (i.e. not pull requests or repository_dispatch)
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2.3.4
+          with:
+            ref: ${{ github.sha }}
+            token: ${{ secrets.OTTO_TOKEN }}
+
+        - name: Configure Otto
+          run: |
+            git config --local user.email "otc-builder@outcome.co"
+            git config --local user.name "Otto the Bot"
+
+        # This creates a new commit and tag if we're bumping
+        - name: Bump version
+          id: bump_version
+          uses: outcome-co/action-update-version@v2.0.0
+
+        - name: Set up python 3.8.6
+          if: steps.bump_version.outputs.updated == 'true'
+          uses: actions/setup-python@v2.2.1
+          with:
+            python-version: "3.8.6"
+
+        - name: Setup environment
+          if: steps.bump_version.outputs.updated == 'true'
+          run: ./bootstrap.sh --build-system-only
+
+        # If we've created a new version, push it
+        - name: Push new version
+          if: steps.bump_version.outputs.updated == 'true'
+          run: git push origin HEAD:master --follow-tags && git push --tags
+
+        - name: Publish package
+          if: steps.bump_version.outputs.updated == 'true'
+          run: inv release.publish
+          env:
+            PYTHONPATH: src
+
+    auto_merge_dependabot:
+        name: Auto-approve dependabot pull requests
+        runs-on: ubuntu-latest
+        needs: [test]
+
+        if: (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]') && github.event_name == 'pull_request'
+
+        steps:
+          - name: Auto-approve
+            uses: hmarr/auto-approve-action@v2.0.0
+            with:
+              github-token: ${{ secrets.OTTO_TOKEN }}
+
+          - name: Auto-merge
+            uses: "pascalgn/automerge-action@v0.13.0"
+            env:
+              MERGE_LABELS: ""
+              MERGE_METHOD: squash
