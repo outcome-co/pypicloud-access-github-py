@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Optional, Set, TypedDict
 
 import pystache
 from pydantic import BaseModel, validator
@@ -11,9 +11,9 @@ class BaseSchema(BaseModel):
 
 
 class SessionObject(BaseSchema):
-    session_id: str = None
+    session_id: Optional[str] = None
 
-    def set_session_id(self, session_id: str):
+    def set_session_id(self, session_id: str):  # noqa: WPS615
         assert self.session_id is None
         self.session_id = session_id  # noqa: WPS601
 
@@ -85,7 +85,14 @@ class UserMembership(BaseSchema):
     name: str
 
 
+class ScenarioValues(TypedDict):
+    users: List[UserMembership]
+    repositories: List[Repository]
+    teams: List[Team]
+
+
 class Scenario(SessionObject):
+    name: str
     # Users has to go before teams for validation
     # https://pydantic-docs.helpmanual.io/usage/models/#field-ordering
     users: List[UserMembership] = []
@@ -102,6 +109,8 @@ class Scenario(SessionObject):
 
     def set_session_id(self, session_id: str) -> None:
         super().set_session_id(session_id)
+
+        assert self.session_id
 
         for team in self.teams:
             team.set_session_id(self.session_id)
@@ -120,34 +129,34 @@ class Scenario(SessionObject):
             repo.update_users(user_map)
 
     @validator('teams')
-    def check_team_memberships(cls, teams: List[Team], values):  # noqa: N805
+    def check_team_memberships(cls, teams: List[Team], values: ScenarioValues):  # noqa: N805
         all_users = {u.name for u in values.get('users', [])}
 
         for team in teams:
             team_users = set(team.members)
             if not team_users.issubset(all_users):
-                raise ValueError(f'Unknown users: {team_users - all_users}')
+                raise ValueError(f'Unknown users: {team_users - all_users}')  # noqa: WPS237
 
         return teams
 
     @validator('repositories')
-    def check_repository_collaborators(cls, repositories: List[Repository], values):  # noqa: N805
+    def check_repository_collaborators(cls, repositories: List[Repository], values: ScenarioValues):  # noqa: N805
         all_users = {u.name for u in values.get('users', [])}
 
         for repo in repositories:
             repo_users = {m.name for m in repo.collaborators}
             if not repo_users.issubset(all_users):
-                raise ValueError(f'Unknown users: {repo_users - all_users}')
+                raise ValueError(f'Unknown users: {repo_users - all_users}')  # noqa: WPS237
 
         return repositories
 
     @validator('teams')
-    def check_team_repositories(cls, teams: List[Team], values):  # noqa: N805
+    def check_team_repositories(cls, teams: List[Team], values: ScenarioValues):  # noqa: N805
         all_repos = {r.name for r in values.get('repositories', [])}
 
         for team in teams:
             team_repos = {r.name for r in team.repositories}
             if not team_repos.issubset(all_repos):
-                raise ValueError(f'Unknown repos: {team_repos - all_repos}')
+                raise ValueError(f'Unknown repos: {team_repos - all_repos}')  # noqa: WPS237
 
         return teams

@@ -5,6 +5,7 @@ max-annotation-complexity = 5
 count = True
 exclude = .git, dist, .cache, __pycache__
 docstring-convention = google
+color = always
 
 format = ${cyan}%(path)s${reset}:${yellow_bold}%(row)d${reset}:${green_bold}%(col)d${reset}: ${red_bold}%(code)s${reset} %(text)s
 
@@ -42,8 +43,15 @@ ignore = W503, # Allow line break before binary operator
          R504, # This rule is so often incorrect
          WPS602, # Allow staticmethods
          E203, # Whitespace before ':'
+         WPS201, # Too many imports
+         WPS235, # Too many imported names
+         WPS226, # String constants
+         WPS461, # Forbidden ignores
+         S101, # Allow assert
+         WPS454, # Exception type
 
 per-file-ignores = test/**.py: WPS442, WPS226, WPS219, S101, D100, WPS211, WPS609, WPS118, WPS520, WPS214, WPS300
+                   tasks.py: DAR
 # WPS442, # pytest fixtures require shadowing
 # WPS211, # Too many arguments
 # WPS226, # Allow several usage of string constants (> 3)

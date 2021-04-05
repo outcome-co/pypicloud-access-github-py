@@ -1,0 +1,40 @@
+query getOrganizationRepositoryPermissions($login: String!, $first: Int = 20, $after: String = null) {
+    organization(login: $login) {
+        repositories(first: $first, after: $after) {
+            edges {
+                node {
+                    name
+                    collaborators {
+                        edges {
+                            node {
+                                login
+                            }
+                            permissionSources {
+                                permission
+                                source {
+                                    __typename
+
+                                    ... on Organization {
+                                        login
+                                    }
+
+                                    ... on Team {
+                                        name
+                                    }
+
+                                    ... on Repository {
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+        }
+    }
+}

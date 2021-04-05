@@ -13,18 +13,18 @@ repository = "https://github.com/outcome-co/pypicloud-access-github-py"
 documentation = "https://github.com/outcome-co/pypicloud-access-github-py#README"
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = "^3.8.6"
 toml = "^0.10.1"
-sgqlc = ">=10.1,<13.0"
-pydash = "^4.8.0"
 python-memcached = {version = "^1.59", optional = true }
-outcome-utils = "^4.7.0"
+outcome-utils = "^5.0.3"
+gql = {version = "3.0.0.0a5", extras = ["all"]}
+pydantic = "^1.8.1"
 
 [tool.poetry.extras]
 memcache = ["python-memcached"]
 
 [tool.poetry.dev-dependencies]
-outcome-devkit = "3.2.1"
+outcome-devkit = "^6.6.2"
 pytest-dotenv = "^0.5.1"
 PyGithub = "^1.54"
 pydantic = "^1.7"
@@ -41,23 +41,28 @@ redis = "^3.5.3"
 flaky = "^3.7.0"
 tenacity = "^6.3.1"
 pystache = "^0.5.4"
+outcome-pypicloud-storage-gcs = "^0.3.0"
 
 
 [tool.isort]
 skip_glob = "*/.cache/**/*"
+line_length = 130
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
 
 [tool.coverage.run]
 branch = true
 data_file = 'coverage/data'
 source = ['src']
 omit = ['test/*']
-parallel = true
 plugins = ['outcome.devkit.env_coverage']
 
 [tool.coverage.report]
 fail_under = 100
 skip_empty = true
-exclude_lines = ['pragma: no cover', '@abc.abstract', '@abstract']
 
 [tool.coverage.html]
 show_contexts = true
@@ -91,6 +96,6 @@ bump_message = "chore(version): $current_version → $new_version"
 version_files = ["pyproject.toml:^version", "README.md:version-badge"]
 
 [build-system]
-requires = ["poetry==1.0.10"]
+requires = ["poetry==1.1.4"]
 build-backend = "poetry.masonry.api"
 
