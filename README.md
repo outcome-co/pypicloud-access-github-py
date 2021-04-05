@@ -1,6 +1,6 @@
 # pypicloud-access-github
 
-![ci-badge](https://github.com/outcome-co/pypicloud-access-github-py/workflows/Checks/badge.svg) ![version-badge](https://img.shields.io/badge/version-1.2.8-brightgreen)
+![ci-badge](https://github.com/outcome-co/pypicloud-access-github-py/workflows/Checks/badge.svg) ![version-badge](https://img.shields.io/badge/version-1.2.9-brightgreen)
 
 This package provides a Github-based authentication backend for [pypicloud](https://pypicloud.readthedocs.io/en/latest/).
 
