@@ -37,6 +37,7 @@ from typing import (
 )
 
 from dogpile.cache import CacheRegion
+from github import Github as GithubRESTClient
 from outcome.pypicloud_access_github.graphql.github import Github
 from outcome.pypicloud_access_github.graphql.schemas.models.organization import OrganizationMemberRole
 from outcome.pypicloud_access_github.graphql.schemas.models.repository import DefaultRepositoryPermissionField
@@ -103,6 +104,7 @@ class PackagePermissions(TypedDict):
 class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-tests; # noqa: WPS214
 
     client: Github
+    token: str
     organization_name: str
     repo_exclude_list: Optional[List[str]]
     repo_include_list: Optional[List[str]]
@@ -133,10 +135,25 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
 
         self.organization_name = organization
         self.client = Github(token)
+        self.token = token
 
         self.repo_pattern = repo_pattern
         self.repo_include_list = repo_include_list
         self.repo_exclude_list = repo_exclude_list
+
+    @cacheable
+    def default_organization_permissions(self) -> Set[PypiPermission]:
+        # We have to retrieve the default organization permission to determine the read/write
+        # permissions for users with no explicit permissions. This value is only accessible via
+        # the REST API
+
+        rest_client = GithubRESTClient(self.token)
+        default_permission_as_string = rest_client.get_organization(self.organization_name).default_repository_permission
+
+        # We need to convert it to an instance of the enum to use the mapping function
+        default_permission = DefaultRepositoryPermissionField[default_permission_as_string]
+
+        return self.convert_permission(default_permission)
 
     @abc.abstractmethod
     def get_package_name(self, package_file_content: str) -> Optional[str]:  # pragma: no cover
@@ -354,7 +371,11 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             dict: Mapping of group name to a list of permissions (which can contain 'read' and/or 'write')
         """
-        return self.package_permissions(package, _teams_key)
+        permissions = self.package_permissions(package, _teams_key)
+
+        LOG.debug(f'Checking group permissions for package: {package}: {permissions}')
+
+        return permissions
 
     def user_permissions(self, package: str) -> Dict[str, List[PypiPermission]]:
         """Get a mapping of all users to their permissions for a package.
@@ -365,7 +386,11 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         Returns:
             Dict[str, List[str]]: Mapping of username to a list of permissions (which can contain 'read' and/or 'write')
         """
-        return self.package_permissions(package, _users_key)
+        permissions = self.package_permissions(package, _users_key)
+
+        LOG.debug(f'Checking user permissions for package: {package}: {permissions}')
+
+        return permissions
 
     @cacheable
     def package_permissions(self, package: str, principal_type: Entity) -> Dict[str, List[PypiPermission]]:
@@ -436,7 +461,11 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
             (List[Dict[str, Union[List[str], str]]]): List of dicts.
                 Each dict contains 'package' (str) and 'permissions' (List[str]).
         """
-        return self.entity_package_permissions(_users_key, username)
+        permissions = self.entity_package_permissions(_users_key, username)
+
+        LOG.debug(f'Package permissions for user: {username}: {permissions}')
+
+        return permissions
 
     def group_package_permissions(self, group: str) -> Sequence[PackagePermissions]:  # type: ignore
         """Get a list of all packages that a group has permissions on.
@@ -448,7 +477,11 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
             List[Dict[str, Union[List[str], str]]]: List of dicts.
                 Each dict contains 'package' (str) and 'permissions' (List[str]).
         """
-        return self.entity_package_permissions(_teams_key, group)
+        permissions = self.entity_package_permissions(_teams_key, group)
+
+        LOG.debug(f'Package permissions for group: {group}: {permissions}')
+
+        return permissions
 
     @cacheable
     def repository_permissions(self) -> Dict[str, RepositoryPermissions]:  # noqa: WPS231, cognitive complexity
@@ -491,7 +524,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
             repo_perms: RepositoryPermissions = {'users': {}, 'teams': {}}
 
             for user, u_permissions in user_permissions:
-                user_perms: Set[PypiPermission] = cast(Set[PypiPermission], set())
+                user_perms: Set[PypiPermission] = self.default_organization_permissions()
 
                 for u_p in u_permissions:
                     user_perms = user_perms.union(self.convert_permission(u_p))
@@ -573,6 +606,7 @@ class Access(abc.ABC, IAccessBackend):  # pragma: only-covered-in-integration-te
         try:
             # Run a query to check everything is running smoothly
             self.users()
+            self.default_organization_permissions()
             return (True, '')
         except Exception as ex:
             return (False, str(ex))
